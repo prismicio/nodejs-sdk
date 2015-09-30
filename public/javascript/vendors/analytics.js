@@ -57,8 +57,7 @@ prismic.analytics = function() {
     var matches = prismic.endpoint.match(new RegExp("(https?://(.*?)/)")) || [];
     var baseURL = matches[1].replace(/\.cdn\.prismic\.io/, ".prismic.io");
     $.ajax({
-      // url: baseURL + '/app/authenticated',
-      url: "http://arnaud.wroom.dev/app/authenticated",
+      url: baseURL + '/app/authenticated',
       xhrFields: {
         withCredentials: true
       },

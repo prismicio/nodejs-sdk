@@ -31,22 +31,20 @@ function sendAnalyticsEvent(category, type, label) {
   prismic.utils.cookies.setItem(category + "_" + label, true);
 }
 
-function runEvent (userId) {
-  var category = "quick_start";
+function runEvent (category) {
   var label = "run";
-  var type = "start_server";
+  var type = "start-server";
   if(!prismic.utils.cookies.getItem(category + '_' + label)) {
     sendAnalyticsEvent(category, type, label);
   }
 }
 
-function doneEvent () {
+function doneEvent (category) {
   $('img').map(function(index, node) {
     var isPrismic = new RegExp("^https:\/\/prismic-io.s3.amazonaws.com\/.*$").test($(node).attr('src'));
     if(isPrismic) {
-      var category = "quick_start";
       var label = "done";
-      var type = "get_prismic_document";
+      var type = "get-prismic-document";
       if(!prismic.utils.cookies.getItem(category + '_' + label)) {
         sendAnalyticsEvent(category, type, label);
       }
@@ -76,8 +74,9 @@ prismic.analytics = function() {
       ga('set', 'dimension1', data.userId);
       ga('send', 'pageview');
       
-      runEvent();
-      doneEvent();
+      var category = "tutorial-quickstart";
+      runEvent(category);
+      doneEvent(category);
     });
   }
 }

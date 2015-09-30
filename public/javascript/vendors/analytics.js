@@ -29,7 +29,7 @@ prismic.utils = {
 function sendAnalyticsEvent(category, type, label) {
   ga('send', 'event', category, type, label,
   {
-    'hitCallback': function() { 
+    'hitCallback': function() {
       prismic.utils.cookies.setItem(category + "_" + label, true);
     }
   });
@@ -76,7 +76,7 @@ prismic.analytics = function() {
       ga('set', '&uid', data.userId);
       ga('set', 'dimension1', data.userId);
       ga('send', 'pageview');
-      
+
       var category = "tutorial-quickstart";
       runEvent(category);
       doneEvent(category);
@@ -84,6 +84,6 @@ prismic.analytics = function() {
   }
 }
 
-$(document).ready(function() {  
+$(document).ready(function() {
   prismic.analytics();
 });

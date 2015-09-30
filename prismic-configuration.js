@@ -11,8 +11,7 @@ exports.Configuration = {
 
   // -- Links resolution rules
   linkResolver: function(doc) {
-    if (doc.isBroken) return false;
-    return '/documents/' + doc.id + '/' + doc.slug;
+    return false;
   },
 
   // -- What to do in the event of an error from prismic.io

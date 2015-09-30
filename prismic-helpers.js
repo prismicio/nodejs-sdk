@@ -13,22 +13,38 @@ exports.getApiHome = function(accessToken, callback) {
   Prismic.Api(Configuration.apiEndpoint, callback, accessToken);
 };
 
-exports.getDocument = function(ctx, id, slug, onSuccess, onNewSlug, onNotFound) {
-  ctx.api.forms('everything').ref(ctx.ref).query('[[:d = at(document.id, "' + id + '")]]').submit(function(err, documents) {
-    var results = documents.results;
+exports.getDocumentByUID = function(ctx, type, uid, onThen, onNotFound) {
+  console.log(Prismic.Predicates.at('my.' + type + '.uid', uid));
+  ctx.api.forms('everything').ref(ctx.ref).query(Prismic.Predicates.at('my.' + type + '.uid', uid)).submit(function(err, response) {
+    if(err) {
+      onThen && onThen(err);
+    } else {
+      var document = response.results[0];
+      if(document) {
+        onThen && onThen(null, document);
+      } else {
+        onNotFound && onNotFound();
+      }
+    }
+  });
+};
+
+exports.getDocument = function(ctx, id, slug, onThen, onNewSlug, onNotFound) {
+  ctx.api.forms('everything').ref(ctx.ref).query('[[:d = at(document.id, "' + id + '")]]').submit(function(err, response) {
+    var results = response.results;
     var doc = results && results.length ? results[0] : undefined;
-    if (err) onSuccess(err);
-    else if(doc && (!slug || doc.slug == slug)) onSuccess(null, doc);
+    if (err) onThen(err);
+    else if(doc && (!slug || doc.slug == slug)) onDone(null, doc);
     else if(doc && doc.slugs.indexOf(slug) > -1 && onNewSlug) onNewSlug(doc);
     else if(onNotFound) onNotFound();
-    else onSuccess();
+    else onThen();
   });
 };
 
 exports.getDocuments = function(ctx, ids, callback) {
   if(ids && ids.length) {
-    ctx.api.forms('everything').ref(ctx.ref).query('[[:d = any(document.id, [' + ids.map(function(id) { return '"' + id + '"';}).join(',') + '])]]').submit(function(err, documents) {
-      callback(err, documents.results);
+    ctx.api.forms('everything').ref(ctx.ref).query('[[:d = any(document.id, [' + ids.map(function(id) { return '"' + id + '"';}).join(',') + '])]]').submit(function(err, response) {
+      callback(err, response.results);
     });
   } else {
     callback(null, []);

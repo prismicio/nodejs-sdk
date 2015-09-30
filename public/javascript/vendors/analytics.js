@@ -27,8 +27,12 @@ prismic.utils = {
 }
 
 function sendAnalyticsEvent(category, type, label) {
-  ga('send', 'event', category, type, label);
-  prismic.utils.cookies.setItem(category + "_" + label, true);
+  ga('send', 'event', category, type, label,
+  {
+    'hitCallback': function() { 
+      prismic.utils.cookies.setItem(category + "_" + label, true);
+    }
+  });
 }
 
 function runEvent (category) {

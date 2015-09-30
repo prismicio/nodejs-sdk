@@ -6,6 +6,7 @@ body {
     background: url(/images/bg.jpg);
     color: #FFF;
     font-family: Lato, sans-serif;
+    font-weight: 300;
     font-size: 1em;
 }
 
@@ -23,11 +24,30 @@ h1 {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -70%);
+    transform: translate(-50%, -50%);
     text-align: center;
     width: 35.625rem;
     margin: auto;
     font-size: 1.25rem;
+}
+
+.welcome h1 .punch {
+    position: relative;
+    display: inline-block;
+    width: 130px;
+}
+
+.welcome h1 .punch::before {
+    position: absolute;
+    content: '';
+    background: url(/images/punch.png) no-repeat;
+    display: inline-block;
+    width: 42px;
+    height: 29px;
+    background-size: 90%;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .welcome .star {
@@ -36,5 +56,6 @@ h1 {
 }
 
 .welcome p, .welcome a {
+    letter-spacing: 0.8;
     line-height: 2rem;
 }

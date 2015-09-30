@@ -3,7 +3,18 @@ var prismic = require('../prismic-helpers');
 // -- Display all documents
 
 exports.index = prismic.route(function(req, res, ctx) {
-  res.render('index');
+  var uid = 'get-started';
+  prismic.getDocumentByUID(ctx, 'page', uid, function then(err, document) {
+    if (err) {
+      prismic.onPrismicError(err, req, res);
+    } else {
+      res.render('index-prismic', {
+        document: document
+      });
+    }
+  }, function notFound() {
+    res.send(404, 'Missing document ' + uid);
+  });
 });
 
 // -- Preview documents from the Writing Room

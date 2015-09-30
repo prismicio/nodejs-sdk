@@ -1,0 +1,7 @@
+extends ./layout.jade
+
+block body
+    div.welcome
+        img(src=document.getImage('page.image').main.url, class='star')
+        !{document.getStructuredText('page.title').asHtml(ctx.linkResolver)}
+        !{document.getStructuredText('page.description').asHtml(ctx.linkResolver)}

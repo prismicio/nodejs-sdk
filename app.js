@@ -10,7 +10,6 @@ var express = require('express'),
     methodOverride = require('method-override'),
     session = require('express-session'),
     errorHandler = require('errorhandler'),
-    routes = require('./routes'),
     http = require('http'),
     path = require('path'),
     prismic = require('./prismic-helpers');
@@ -32,12 +31,30 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(errorHandler());
 
 // Routes
-app.route('/').get(routes.index);
-app.route('/preview').get(routes.preview);
+app.route('/').get(function(req, res) {
+  var p = prismic.prismic(req,res);
+  p.getDocumentByUID('page', 'get-started', function then(document) {
+    res.render('index-prismic', {
+      document: document
+    });
+  });
+});
+
+app.route('/preview').get(prismic.route(function(req, res, ctx) {
+  var token = req.query['token'];
+
+  if (token) {
+    ctx.api.previewSession(token, ctx.linkResolver, '/', function(err, url) {
+      res.cookie(prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
+      res.redirect(301, url);
+    });
+  } else {
+    res.send(400, "Missing token from querystring");
+  }
+}));
 
 var PORT = app.get('port');
 
 app.listen(PORT, function() {
   console.log('Express server listening on port ' + PORT);
 });
-

@@ -1,4 +1,5 @@
 var Prismic = require('prismic.io').Prismic,
+    Promise = require('promise'),
     Configuration = require('./prismic-configuration').Configuration,
     http = require('http'),
     https = require('https'),
@@ -63,7 +64,67 @@ exports.getBookmark = function(ctx, bookmark, callback) {
 // -- Exposing as a helper what to do in the event of an error (please edit prismic-configuration.js to change this)
 exports.onPrismicError = Configuration.onPrismicError;
 
-// -- Route wrapper that provide a "prismic context" to the underlying function
+function prismicWithCTX(ctxPromise, req, res) {
+  return {
+    'getDocumentByUID' : function(type, uid, onThen , onNotFound) {
+      console.log(Prismic.Predicates.at('my.' + type + '.uid', uid));
+      ctxPromise.then(function(ctx){
+        res.locals.ctx = ctx;
+        ctx.api.forms('everything').ref(ctx.ref).query(Prismic.Predicates.at('my.' + type + '.uid', uid)).submit(function(err, response) {
+          if(err) {
+            prismic.onPrismicError(err, req, res);
+          } else {
+            var document = response.results[0];
+            if(document) {
+              onThen && onThen(document);
+            } else {
+              if(onNotFound){
+                onNotFound();
+              } else {
+                res.send(404, 'Missing document ' + uid);
+              }
+            }
+          }
+        });
+      });
+    },
+    'getBookmark' : function(bookmark, callback) {
+      ctxPromise.then(function(ctx){
+        res.locals.ctx = ctx;
+        var id = ctx.api.bookmarks[bookmark];
+        if(id) {
+          exports.getDocument(ctx, id, undefined, callback);
+        } else {
+          callback();
+        }
+      });
+    }
+  };
+};
+
+exports.prismic = function(req, res) {
+  var accessToken = (req.session && req.session['ACCESS_TOKEN']) || Configuration.accessToken;
+  var ctxPromise = new Promise(function (fulfill) {
+
+    exports.getApiHome(accessToken, function(err, Api) {
+      if (err) {
+          exports.onPrismicError(err, req, res);
+          return;
+      }
+      var ctx = {
+        endpoint: Configuration.apiEndpoint,
+        api: Api,
+        ref: req.cookies[Prismic.experimentCookie] || req.cookies[Prismic.previewCookie] || Api.master(),
+        linkResolver: function(doc) {
+          return Configuration.linkResolver(doc);
+        }
+      };
+      fulfill(ctx);
+    });
+
+  });
+  return prismicWithCTX(ctxPromise, req, res);
+};
 
 exports.route = function(callback) {
   return function(req, res) {

@@ -16,7 +16,8 @@
     "errorhandler" : "~1.1.1",
     "debug": "~0.7.4",
     "jade": "~1.9.2",
-    "prismic.io": "1.2.1"
+    "prismic.io": "1.2.1",
+    "promise" : "7.0.4"
   },
   "repository" : { "type" : "git", "url" : "http://github.com/prismicio/javascript-nodejs-starter.git" }
 }

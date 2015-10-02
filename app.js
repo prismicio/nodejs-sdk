@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 var express = require('express'),
-    favicon = require('static-favicon'),
+    favicon = require('serve-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
@@ -20,7 +20,7 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(favicon());
+app.use(favicon("public/images/punch.png"));
 app.use(logger('dev'));
 app.use(bodyParser());
 app.use(methodOverride());
@@ -40,18 +40,20 @@ app.route('/').get(function(req, res) {
   });
 });
 
-app.route('/preview').get(prismic.route(function(req, res, ctx) {
-  var token = req.query['token'];
+app.route('/preview').get(function(req, res) {
+  prismic.withContext(req,res, function then(ctx){
+    var token = req.query['token'];
 
-  if (token) {
-    ctx.api.previewSession(token, ctx.linkResolver, '/', function(err, url) {
-      res.cookie(prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
-      res.redirect(301, url);
-    });
-  } else {
-    res.send(400, "Missing token from querystring");
-  }
-}));
+    if (token) {
+      ctx.api.previewSession(token, ctx.linkResolver, '/', function(err, url) {
+        res.cookie(prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
+        res.redirect(301, url);
+      });
+    } else {
+      res.send(400, "Missing token from querystring");
+    }
+  });
+});
 
 var PORT = app.get('port');
 

@@ -102,7 +102,7 @@ function prismicWithCTX(ctxPromise, req, res) {
   };
 };
 
-exports.withContext = function(req, res) {
+exports.withContext = function(req, res, callback) {
   var accessToken = (req.session && req.session['ACCESS_TOKEN']) || Configuration.accessToken;
   var ctxPromise = new Promise(function (fulfill) {
 
@@ -123,7 +123,12 @@ exports.withContext = function(req, res) {
     });
 
   });
-  return prismicWithCTX(ctxPromise, req, res);
+  if(callback){
+    res.locals.ctx = ctx;
+    ctxPromise.then(callback);
+  } else{
+    return prismicWithCTX(ctxPromise, req, res);
+  }
 };
 
 exports.route = function(callback) {

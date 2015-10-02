@@ -10,7 +10,7 @@ head
     // Required for Previews and Experiments
     script(src="//code.jquery.com/jquery-1.11.3.min.js")
     script
-      = "window.prismic = { endpoint: '" + ctx.endpoint + "' };"
+      = ctx?"window.prismic = { endpoint: '" + ctx.endpoint + "' };":""
     script(src="//static.cdn.prismic.io/prismic.min.js")
     script(src="/javascript/vendors/analytics.js")
 

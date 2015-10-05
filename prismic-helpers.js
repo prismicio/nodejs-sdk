@@ -16,7 +16,7 @@ exports.getApiHome = function(accessToken, callback) {
 };
 
 function prismicWithCTX(ctxPromise, req, res) {
-  return {
+  var self = {
 
     'getApiHome' : function(accessToken, callback) {
       ctxPromise.then(function(ctx){
@@ -25,25 +25,21 @@ function prismicWithCTX(ctxPromise, req, res) {
       });
     },
     'getByUID' : function(type, uid, onThen , onNotFound) {
-      console.log(Prismic.Predicates.at('my.' + type + '.uid', uid));
-      ctxPromise.then(function(ctx){
-        res.locals.ctx = ctx;
-        ctx.api.forms('everything').ref(ctx.ref).query(Prismic.Predicates.at('my.' + type + '.uid', uid)).submit(function(err, response) {
-          if(err) {
-            prismic.onPrismicError(err, req, res);
+      self.query(['at','my.'+type+'.uid',uid],function(err, response){
+        var document = response.results[0];
+        if(err) {
+          prismic.onPrismicError(err, req, res);
+        } else {
+          if(document) {
+            onThen && onThen(document);
           } else {
-            var document = response.results[0];
-            if(document) {
-              onThen && onThen(document);
+            if(onNotFound){
+              onNotFound();
             } else {
-              if(onNotFound){
-                onNotFound();
-              } else {
-                res.send(404, 'Missing document ' + uid);
-              }
+              res.send(404, 'Missing document ' + uid);
             }
           }
-        });
+        }
       });
     },
     'getBookmark' : function(bookmark, callback) {
@@ -51,13 +47,13 @@ function prismicWithCTX(ctxPromise, req, res) {
         res.locals.ctx = ctx;
         var id = ctx.api.bookmarks[bookmark];
         if(id) {
-          exports.getDocument(ctx, id, undefined, callback);
+          self.getDocument(ctx, id, undefined, callback);
         } else {
           callback();
         }
       });
     },
-    'getByIDS' : function(ids, callback) {
+    'getByIDs' : function(ids, callback) {
       ctxPromise.then(function(ctx){
         res.locals.ctx = ctx;
         if(ids && ids.length) {
@@ -69,7 +65,7 @@ function prismicWithCTX(ctxPromise, req, res) {
         }
       });
     },
-    'getByID' : function(ctx, id, slug, onThen, onNewSlug, onNotFound) {
+    'getByID' : function(id, slug, onThen, onNewSlug, onNotFound) {
       ctxPromise.then(function(ctx){
         res.locals.ctx = ctx;
         ctx.api.forms('everything').ref(ctx.ref).query('[[:d = at(document.id, "' + id + '")]]').submit(function(err, response) {
@@ -82,8 +78,17 @@ function prismicWithCTX(ctxPromise, req, res) {
           else onThen();
         });
       });
+    },
+    'query' : function(q, callback){
+      ctxPromise.then(function(ctx){
+        res.locals.ctx = ctx;
+        ctx.api.forms('everything').ref(ctx.ref).query(q).submit(function(err, response) {
+          callback(err, response);
+        });
+      });
     }
   };
+  return self;
 };
 
 exports.withContext = function(req, res, callback) {

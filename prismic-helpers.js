@@ -24,7 +24,7 @@ function prismicWithCTX(ctxPromise, req, res) {
         Prismic.Api(Configuration.apiEndpoint, callback, accessToken);
       });
     },
-    'getDocumentByUID' : function(type, uid, onThen , onNotFound) {
+    'getByUID' : function(type, uid, onThen , onNotFound) {
       console.log(Prismic.Predicates.at('my.' + type + '.uid', uid));
       ctxPromise.then(function(ctx){
         res.locals.ctx = ctx;
@@ -57,7 +57,7 @@ function prismicWithCTX(ctxPromise, req, res) {
         }
       });
     },
-    'getDocuments' : function(ids, callback) {
+    'getByIDS' : function(ids, callback) {
       ctxPromise.then(function(ctx){
         res.locals.ctx = ctx;
         if(ids && ids.length) {
@@ -69,7 +69,7 @@ function prismicWithCTX(ctxPromise, req, res) {
         }
       });
     },
-    'getDocument' : function(ctx, id, slug, onThen, onNewSlug, onNotFound) {
+    'getByID' : function(ctx, id, slug, onThen, onNewSlug, onNotFound) {
       ctxPromise.then(function(ctx){
         res.locals.ctx = ctx;
         ctx.api.forms('everything').ref(ctx.ref).query('[[:d = at(document.id, "' + id + '")]]').submit(function(err, response) {

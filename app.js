@@ -33,7 +33,7 @@ app.use(errorHandler());
 // Routes
 app.route('/').get(function(req, res) {
   var p = prismic.withContext(req,res);
-  p.getDocumentByUID('page', 'get-started', function then(document) {
+  p.getByUID('page', 'get-started', function then(document) {
     res.render('index-prismic', {
       document: document
     });

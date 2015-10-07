@@ -12,9 +12,12 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     http = require('http'),
     path = require('path'),
-    prismic = require('./prismic-helpers');
+    prismic = require('express-prismic'),
+    configuration = require('./prismic-configuration');
 
 var app = express();
+
+prismic.init(configuration);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -44,20 +47,7 @@ app.route('/').get(function(req, res) {
   });
 });
 
-app.route('/preview').get(function(req, res) {
-  prismic.withContext(req,res, function (ctx){
-    var token = req.query['token'];
-
-    if (token) {
-      ctx.api.previewSession(token, ctx.linkResolver, '/', function(err, url) {
-        res.cookie(prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
-        res.redirect(301, url);
-      });
-    } else {
-      res.send(400, "Missing token from querystring");
-    }
-  });
-});
+app.route('/preview').get(prismic.preview);
 
 var PORT = app.get('port');
 

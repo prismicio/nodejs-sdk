@@ -25,10 +25,6 @@ prismic.init({
   // -- Access token if the Master is not open
   // accessToken: 'xxxxxx',
 
-  // OAuth
-  // clientId: 'xxxxxx',
-  // clientSecret: 'xxxxxx',
-
   // -- Links resolution rules
   linkResolver: function(doc) {
     return false;
@@ -61,20 +57,7 @@ app.route('/').get(function(req, res){
   res.render('index');
 });
 
-app.route('/preview').get(function(req, res) {
-  prismic.withContext(req,res, function then(ctx){
-    var token = req.query['token'];
-
-    if (token) {
-      ctx.api.previewSession(token, ctx.linkResolver, '/', function(err, url) {
-        res.cookie(prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
-        res.redirect(301, url);
-      });
-    } else {
-      res.send(400, "Missing token from querystring");
-    }
-  });
-});
+app.route('/preview').get(prismic.preview);
 
 var PORT = app.get('port');
 

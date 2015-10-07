@@ -24,59 +24,35 @@ function prismicWithCTX(ctxPromise, req, res) {
         Prismic.Api(Configuration.apiEndpoint, callback, accessToken);
       });
     },
-    'getByUID' : function(type, uid, onThen , onNotFound) {
-      self.query(['at','my.'+type+'.uid',uid],function(err, response){
-        var document = response.results[0];
-        if(err) {
-          prismic.onPrismicError(err, req, res);
-        } else {
-          if(document) {
-            onThen && onThen(document);
-          } else {
-            if(onNotFound){
-              onNotFound();
-            } else {
-              res.send(404, 'Missing document ' + uid);
-            }
-          }
-        }
-      });
+    'getByUID' : function(type, uid, callback) {
+      self.queryFirst(['at','my.'+type+'.uid',uid],callback);
     },
     'getBookmark' : function(bookmark, callback) {
       ctxPromise.then(function(ctx){
         res.locals.ctx = ctx;
         var id = ctx.api.bookmarks[bookmark];
         if(id) {
-          self.getDocument(ctx, id, undefined, callback);
+          self.getByID(ctx, id, callback);
         } else {
-          callback();
+          callback(new Error("Error retrieving boomarked id"));
         }
       });
     },
     'getByIDs' : function(ids, callback) {
-      ctxPromise.then(function(ctx){
-        res.locals.ctx = ctx;
-        if(ids && ids.length) {
-          ctx.api.forms('everything').ref(ctx.ref).query('[[:d = any(document.id, [' + ids.map(function(id) { return '"' + id + '"';}).join(',') + '])]]').submit(function(err, response) {
-            callback(err, response.results);
-          });
-        } else {
-          callback(null, []);
-        }
-      });
+      self.query(['any', 'document.id', ids], callback);
     },
-    'getByID' : function(id, slug, onThen, onNewSlug, onNotFound) {
-      ctxPromise.then(function(ctx){
-        res.locals.ctx = ctx;
-        ctx.api.forms('everything').ref(ctx.ref).query('[[:d = at(document.id, "' + id + '")]]').submit(function(err, response) {
-          var results = response.results;
-          var doc = results && results.length ? results[0] : undefined;
-          if (err) onThen(err);
-          else if(doc && (!slug || doc.slug == slug)) onDone(null, doc);
-          else if(doc && doc.slugs.indexOf(slug) > -1 && onNewSlug) onNewSlug(doc);
-          else if(onNotFound) onNotFound();
-          else onThen();
-        });
+    'getByID' : function(id, callback) {
+      self.queryFirst(['at', 'document.id', id], callback);
+    },
+    'queryFirst' : function(q, callback){
+      self.query(q, function(err, response){
+        if(err){
+          callback(err, null)
+        } else if(response && response.results && response.results[0]) {
+          callback(null, response.results[0]);
+        } else {
+          callback(new Error("empty response"), null)
+        }
       });
     },
     'query' : function(q, callback){

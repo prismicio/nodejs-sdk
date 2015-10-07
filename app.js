@@ -33,7 +33,11 @@ app.use(errorHandler());
 // Routes
 app.route('/').get(function(req, res) {
   var p = prismic.withContext(req,res);
-  p.getByUID('page', 'get-started', function then(document) {
+  //p.queryFirst(['at', 'my.page.uid', 'get-started'], function (err, document) {
+  //import primsic as well???
+  //p.queryFirst(Prismic.Predicates.at('my.page.uid', 'get-started'), function (err, document) {
+  p.getByUID('page', 'get-started', function (err, document) {
+    if(err) return handlerError(err, req, res);
     res.render('index-prismic', {
       document: document
     });
@@ -41,7 +45,7 @@ app.route('/').get(function(req, res) {
 });
 
 app.route('/preview').get(function(req, res) {
-  prismic.withContext(req,res, function then(ctx){
+  prismic.withContext(req,res, function (ctx){
     var token = req.query['token'];
 
     if (token) {

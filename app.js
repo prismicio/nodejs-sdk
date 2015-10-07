@@ -37,6 +37,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(errorHandler());
 
+function handleError(err, req, res) {
+  if (err.status == 404) {
+    res.status(404).send("404 not found");
+  } else {
+    res.status(500).send("Error 500: " + err.message);
+  }
+}
+
 // Routes
 app.route('/').get(function(req, res){
   res.render('index');

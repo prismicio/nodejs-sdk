@@ -12,9 +12,35 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     http = require('http'),
     path = require('path'),
-    prismic = require('./prismic-helpers');
+    prismic = require('express-prismic');
 
 var app = express();
+
+// Prismic.io configuration
+
+prismic.init({
+
+  apiEndpoint: 'https://lesbonneschoses.prismic.io/api',
+
+  // -- Access token if the Master is not open
+  // accessToken: 'xxxxxx',
+
+  // OAuth
+  // clientId: 'xxxxxx',
+  // clientSecret: 'xxxxxx',
+
+  // -- Links resolution rules
+  linkResolver: function(doc) {
+    return false;
+  },
+
+  // -- What to do in the event of an error from prismic.io
+  onPrismicError: function(err, req, res) {
+    res.send(500, "Error 500: " + err.message);
+  }
+
+});
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);

@@ -12,30 +12,15 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     http = require('http'),
     path = require('path'),
-    prismic = require('express-prismic');
+    prismic = require('express-prismic'),
+    configuration = require('./prismic-configuration').Configuration;
+
 
 var app = express();
 
 // Prismic.io configuration
 
-prismic.init({
-
-  apiEndpoint: 'https://lesbonneschoses.prismic.io/api',
-
-  // -- Access token if the Master is not open
-  // accessToken: 'xxxxxx',
-
-  // -- Links resolution rules
-  linkResolver: function(doc) {
-    return false;
-  },
-
-  // -- What to do in the event of an error from prismic.io
-  onPrismicError: function(err, req, res) {
-    res.send(500, "Error 500: " + err.message);
-  }
-
-});
+prismic.init(configuration);
 
 
 // all environments

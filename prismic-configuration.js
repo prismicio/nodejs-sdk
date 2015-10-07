@@ -12,11 +12,6 @@ exports.Configuration = {
   // -- Links resolution rules
   linkResolver: function(doc) {
     return false;
-  },
-
-  // -- What to do in the event of an error from prismic.io
-  onPrismicError: function(err, req, res) {
-    res.send(500, "Error 500: " + err.message);
   }
-
+ 
 };

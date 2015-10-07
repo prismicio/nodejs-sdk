@@ -33,6 +33,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(errorHandler());
 
+function handleError(err, req, res) {
+  if (err.status == 404) {
+    res.status(404).send("404 not found");
+  } else {
+    res.status(500).send("Error 500: " + err.message);
+  }
+}
+
 // Routes
 app.route('/').get(function(req, res) {
   var p = prismic.withContext(req,res);
@@ -40,10 +48,13 @@ app.route('/').get(function(req, res) {
   //import primsic as well???
   //p.queryFirst(Prismic.Predicates.at('my.page.uid', 'get-started'), function (err, document) {
   p.getByUID('page', 'get-started', function (err, document) {
-    if(err) return handlerError(err, req, res);
-    res.render('index-prismic', {
-      document: document
-    });
+    if (err) {
+      handleError(err, req, res);
+    } else {
+      res.render('index-prismic', {
+        document: document
+      });
+    }
   });
 });
 

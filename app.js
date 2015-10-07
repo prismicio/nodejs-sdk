@@ -13,7 +13,7 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     prismic = require('express-prismic'),
-    configuration = require('./prismic-configuration');
+    configuration = require('./prismic-configuration').Configuration;
 
 var app = express();
 

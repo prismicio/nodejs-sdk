@@ -12,7 +12,7 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     http = require('http'),
     path = require('path'),
-    prismic = require('express-prismic'),
+    prismic = require('express-prismic').Prismic,
     configuration = require('./prismic-configuration').Configuration;
 
 

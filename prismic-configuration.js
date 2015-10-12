@@ -10,7 +10,7 @@ exports.Configuration = {
   // clientSecret: 'xxxxxx',
 
   // -- Links resolution rules
-  linkResolver: function(doc) {
+  linkResolver: function(doc, ctx) {
     return false;
   }
  

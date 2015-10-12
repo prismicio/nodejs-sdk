@@ -72,7 +72,7 @@ prismic.analytics = function() {
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-67555323-1', {'cookieDomain': 'none'});
+      ga('create', 'UA-43699356-1', {'cookieDomain': 'none'});
       ga('set', '&uid', data.userId);
       ga('set', 'dimension1', data.userId);
       ga('send', 'pageview');

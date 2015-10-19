@@ -37,7 +37,7 @@ function sendAnalyticsEvent(category, type, label) {
 
 function runEvent (category) {
   var label = "run";
-  var type = "start-server";
+  var type = "run";
   if(!prismic.utils.cookies.getItem(category + '_' + label)) {
     sendAnalyticsEvent(category, type, label);
   }
@@ -48,7 +48,7 @@ function doneEvent (category) {
     var isPrismic = new RegExp("^https:\/\/prismic-io.s3.amazonaws.com\/.*$").test($(node).attr('src'));
     if(isPrismic) {
       var label = "done";
-      var type = "get-prismic-document";
+      var type = "done";
       if(!prismic.utils.cookies.getItem(category + '_' + label)) {
         sendAnalyticsEvent(category, type, label);
       }

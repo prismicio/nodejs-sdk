@@ -47,12 +47,12 @@ app.route('/').get(function(req, res) {
   //p.queryFirst(['at', 'my.page.uid', 'get-started'], function (err, document) {
   //import primsic as well???
   //p.queryFirst(Prismic.Predicates.at('my.page.uid', 'get-started'), function (err, document) {
-  p.getByUID('page', 'get-started', function (err, document) {
+  p.getByUID('page', 'get-started', function (err, prismicdoc) {
     if (err) {
       handleError(err, req, res);
     } else {
       res.render('index-prismic', {
-        document: document
+        prismicdoc: prismicdoc
       });
     }
   });

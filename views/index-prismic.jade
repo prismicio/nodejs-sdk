@@ -2,6 +2,6 @@ extends ./layout.jade
 
 block body
     div.welcome
-        img(src=document.getImage('page.image').url, class='star')
-        !{document.getStructuredText('page.title').asHtml(ctx.linkResolver)}
-        !{document.getStructuredText('page.description').asHtml(ctx.linkResolver)}
+        img(src=prismicdoc.getImage('page.image').url, class='star')
+        !{prismicdoc.getStructuredText('page.title').asHtml(ctx.linkResolver)}
+        !{prismicdoc.getStructuredText('page.description').asHtml(ctx.linkResolver)}

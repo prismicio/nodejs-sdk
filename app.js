@@ -45,14 +45,9 @@ function handleError(err, req, res) {
   }
 }
 
-app.route('/:uid').get(function(req, res) {
-  var p = prismic.withContext(req, res);
-  var uid = req.param('uid');
-  p.queryFirst(prismic.Predicates.at("my.product.uid", uid), function(err, prismicdoc) {
-    res.render('index', {
-      prismicdoc: prismicdoc
-    });
-  });
+// Routes
+app.route('/').get(function(req, res){
+  res.render('index');
 });
 
 app.route('/preview').get(prismic.preview);

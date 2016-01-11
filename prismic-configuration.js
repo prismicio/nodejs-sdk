@@ -15,5 +15,4 @@ exports.Configuration = {
   linkResolver: function(doc, ctx) {
     return '/';
   }
- 
 };

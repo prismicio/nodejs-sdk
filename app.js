@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-var prismic = require('express-prismic').Prismic;
+var prismic = require('express-prismic');
 var app = require('./config');
 var PORT = app.get('port');
 

@@ -30,10 +30,11 @@ exports.Configuration = {
 
   // -- Access token if the Master is not open
   // accessToken: 'xxxxxx',
+
   ...
 ```
 
-You may have to restart your FRAMEWORK server.
+You may have to restart your server.
 
 #### Deploy your NodeJS application
 

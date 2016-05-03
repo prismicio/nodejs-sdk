@@ -9,7 +9,12 @@ var PORT = app.get('port');
 
 // Returns a Promise
 function api(req, res) {
-  return prismic.get(configuration.apiEndpoint, {
+  // So we can use this information in the views
+  res.locals.ctx = {
+    endpoint: configuration.apiEndpoint,
+    linkResolver: configuration.linkResolver
+  };
+  return prismic.api(configuration.apiEndpoint, {
     accessToken: configuration.accessToken,
     req: req
   });
@@ -31,4 +36,11 @@ app.route('/').get(function(req, res){
   res.render('index');
 });
 
-app.route('/preview').get(prismic.preview);
+app.route('/preview').get(function(req, res) {
+  api(req, res).then(function(api) {
+    return Prismic.preview(api, configuration.linkResolver, req, res);
+  }).catch(function(err) {
+    handleError(err, req, res);
+  });
+});
+

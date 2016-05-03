@@ -3,8 +3,8 @@
  * Module dependencies.
  */
 var prismic = require('prismic-nodejs');
-var configuration = require('./prismic-configuration');
 var app = require('./config');
+var configuration = require('./prismic-configuration');
 var PORT = app.get('port');
 
 // Returns a Promise
@@ -44,5 +44,11 @@ app.route('/').get(function(req, res) {
   });
 });
 
-app.route('/preview').get(prismic.preview);
+app.route('/preview').get(function(req, res) {
+  api(req, res).then(function(api) {
+    return Prismic.preview(api, configuration.linkResolver, req, res);
+  }).catch(function(err) {
+    handleError(err, req, res);
+  });
+});
 

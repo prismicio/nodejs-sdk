@@ -6,15 +6,15 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "~4.13.4",
-    "serve-favicon": "~2.3.0",
-    "morgan": "~1.0.0",
     "body-parser": "~1.0.0",
-    "method-override": "~2.1.1",
-    "errorhandler": "~1.1.1",
     "debug": "~0.7.4",
-    "jade": "~1.9.2",
-    "prismic-nodejs": "~1.0.0"
+    "errorhandler": "~1.1.1",
+    "express": "~4.13.4",
+    "method-override": "~2.1.1",
+    "morgan": "~1.0.0",
+    "prismic-nodejs": "~1.0.0",
+    "pug": "^2.0.0-alpha6",
+    "serve-favicon": "~2.3.0"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 module.exports = {
 
-  apiEndpoint: 'https://testerw.prismic.io/api',
+  apiEndpoint: 'https://your-repo-name.prismic.io/api',
 
   // -- Access token if the Master is not open
   // accessToken: 'xxxxxx',

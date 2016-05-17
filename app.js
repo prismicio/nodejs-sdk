@@ -36,8 +36,8 @@ app.route('/').get(function(req, res) {
   api(req, res).then(function(api) {
     return api.getByUID('page', 'get-started');
   }).then(function(prismicdoc) {
-    res.render('index-prismic', {
-      prismicdoc: prismicdoc
+    res.render('index', {
+      pagecontent: prismicdoc
     });
   }).catch(function(err) {
     handleError(err, req, res);

@@ -2,8 +2,6 @@ extends ./layout.pug
 
 block body
     div.welcome
-        img(src='/images/powerstart.png', class='star')
-        h1 Welcome aboard!
-        p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-        p Checkout our 
-          a(href='http://prismic.io/quickstart') Quick Start Tutorial
+        img(src=pagecontent.getImage('page.image').url, class='star')
+        != pagecontent.getStructuredText('page.title').asHtml(ctx.linkResolver)
+        != pagecontent.getStructuredText('page.description').asHtml(ctx.linkResolver)

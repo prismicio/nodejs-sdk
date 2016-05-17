@@ -1,7 +1,0 @@
-extends ./layout.jade
-
-block body
-    div.welcome
-        img(src=prismicdoc.getImage('page.image').url, class='star')
-        !{prismicdoc.getStructuredText('page.title').asHtml(ctx.linkResolver)}
-        !{prismicdoc.getStructuredText('page.description').asHtml(ctx.linkResolver)}

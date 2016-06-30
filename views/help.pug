@@ -1,0 +1,26 @@
+doctype html(lang='en')
+
+head
+    title prismic.io help
+    link(rel="stylesheet", href="/stylesheets/help.css")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+
+    // Required for Previews and Experiments
+    script(src="//code.jquery.com/jquery-1.11.3.min.js")
+    script
+      = ctx?"window.prismic = { endpoint: '" + ctx.endpoint + "' };":""
+    script(src="//static.cdn.prismic.io/prismic.min.js")
+    script(src="/javascript/vendors/analytics.js")
+
+body
+  div.main
+    h1 prismic.io help
+    ul
+      li This is your #[a(href='https://nodejs.org/') Node]/#[a(href='http://expressjs.com/') Express]/#[a(href='http://jade-lang.com/') PUG Templates] project. Feel free to change anything, it's your code!
+        ul
+          li routes are in #[code /app.js]
+          li views are in #[code /views/]
+      li Visit your Writing Room on #[a(href='https://your-repo-name.prismic.io/') https://your-repo-name.prismic.io/] to create custom types and start writing documents
+      li Don't know what to do next? Try the #[a(href='https://prismic.io/quickstart') quickstart]
+      li Also see the #[a(href='http://prismic.io/docs') developer documentation]
+      

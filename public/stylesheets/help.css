@@ -1,0 +1,14 @@
+h1 {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.main {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+}
+
+
+

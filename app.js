@@ -36,6 +36,11 @@ app.route('/').get(function(req, res){
   res.render('index');
 });
 
+// Remove this route before releasing to production
+app.route('/help').get(function(req, res) {
+  res.render('help');
+});
+
 app.route('/preview').get(function(req, res) {
   api(req, res).then(function(api) {
     return prismic.preview(api, configuration.linkResolver, req, res);

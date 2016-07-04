@@ -2,15 +2,15 @@ doctype html(lang='en')
 
 head
     title prismic.io help
-    link(rel="stylesheet", href="/stylesheets/help.css")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-
-    // Required for Previews and Experiments
+    link(rel="stylesheet", href="/stylesheets/help.css")
+    link(rel="stylesheet", href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/codemirror.css")
+    
     script(src="//code.jquery.com/jquery-1.11.3.min.js")
     script(src="//static.cdn.prismic.io/prismic.min.js")
     script(src="//npmcdn.com/prismic.io@3.1.3/dist/prismic.io.min.js")
-
-    script(src="/javascript/help.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/codemirror.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/javascript/javascript.min.js")
 
 body
   div.main
@@ -24,11 +24,17 @@ body
       li Don't know what to do next? Try the #[a(href='https://prismic.io/quickstart') quickstart]
       li Also see the #[a(href='http://prismic.io/docs') developer documentation]
     h2 Query your repository
-      form(id='prismic-code')
-        textarea
-          | Prismic.api('https://lesbonneschoses.prismic.io/api').then(function(api) {
-          |   return api.query('');
-          | }).then(function(response) {
-          |   console.log('Results: ', response.results);
-          | });
-        input(type="submit")
+    form(id='prismic-code')
+      textarea(id='editor')
+        | Prismic.api('https://lesbonneschoses.prismic.io/api').then(function(api) {
+        |   return api.query('');
+        | }).then(function(response) {
+        |   console.log('Results: ', response.results);
+        | });
+      input(type="submit")
+
+    script.
+      var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+        lineNumbers: true
+      });
+    script(src="/javascript/help.js")

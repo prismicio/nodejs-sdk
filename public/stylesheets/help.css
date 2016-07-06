@@ -10,5 +10,7 @@ h1 {
   padding: 20px;
 }
 
-
+.samples dd {
+  font-family: monospace;
+}
 

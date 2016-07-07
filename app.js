@@ -38,9 +38,8 @@ app.route('/').get(function(req, res){
 
 app.route('/preview').get(function(req, res) {
   api(req, res).then(function(api) {
-    return Prismic.preview(api, configuration.linkResolver, req, res);
+    return prismic.preview(api, configuration.linkResolver, req, res);
   }).catch(function(err) {
     handleError(err, req, res);
   });
 });
-

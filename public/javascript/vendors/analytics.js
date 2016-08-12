@@ -1,4 +1,5 @@
-prismic.utils = {
+var prismic = prismic || {};
+prismic.nodeutils = {
   // https://developer.mozilla.org/en-US/docs/DOM/document.cookie
   cookies: {
     getItem: function(sKey) {
@@ -30,7 +31,7 @@ function sendAnalyticsEvent(category, type, label) {
   ga('send', 'event', category, type, label,
   {
     'hitCallback': function() {
-      prismic.utils.cookies.setItem(category + "_" + label, true);
+      prismic.nodeutils.cookies.setItem(category + "_" + label, true);
     }
   });
 }
@@ -38,7 +39,7 @@ function sendAnalyticsEvent(category, type, label) {
 function runEvent (category) {
   var label = "run";
   var type = "run";
-  if(!prismic.utils.cookies.getItem(category + '_' + label)) {
+  if(!prismic.nodeutils.cookies.getItem(category + '_' + label)) {
     sendAnalyticsEvent(category, type, label);
   }
 }
@@ -49,7 +50,7 @@ function doneEvent (category) {
     if(isPrismic) {
       var label = "done";
       var type = "done";
-      if(!prismic.utils.cookies.getItem(category + '_' + label)) {
+      if(!prismic.nodeutils.cookies.getItem(category + '_' + label)) {
         sendAnalyticsEvent(category, type, label);
       }
     }

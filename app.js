@@ -33,7 +33,7 @@ app.listen(PORT, function() {
 });
 
 app.route('/').get(function(req, res){
-  res.render('index');
+  res.redirect('/help');
 });
 
 // Remove this route before releasing to production

@@ -3,20 +3,8 @@ html {
 }
 
 body {
-    background: url(/images/bg.jpg);
-    color: #FFF;
     font-family: Lato, sans-serif;
-    font-weight: 300;
     font-size: 1em;
-}
-
-a {
-    color: #FDBD58;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 h1 {
@@ -25,23 +13,28 @@ h1 {
     margin-bottom: 1.25rem;
 }
 
-.welcome {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: 35.625rem;
+.centered {
+    max-width: 1200px;
+    padding: 50px;
     margin: auto;
-    font-size: 1.25rem;
 }
 
-.welcome .star {
-    width: 14.875rem;
-    margin-bottom: 2rem;
+h2 {
+    font-size: 34px;
+    margin: 20px 0;
+    color: #5ACE83;
+    font-weight: bold;
 }
 
-.welcome p, .welcome a {
-    letter-spacing: 0.8;
-    line-height: 2rem;
+h3 {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #516677;
+    font-weight: bold;
+}
+
+p {
+    font-size: 18px;
+    color: #516677;
+    line-height: 28px;
 }

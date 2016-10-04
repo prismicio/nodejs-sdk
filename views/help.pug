@@ -21,10 +21,12 @@ block body
     p Start your tutorial in-app and come back here to complete the step 4.
     h3 Create your first route
     p add a new Route in app.js
-    pre.
-      \n  app.route('/').get(function(req, res) {
-            ...
-          });
+    .source-code
+      pre
+        code
+          |app.route('/').get(function(req, res) {
+          |  ...
+          |});
 
     h3 Query your content
     p
@@ -32,32 +34,36 @@ block body
       |We are gonna query the content based on the custom type.
       |You'll have to replace 'your_custom_type_name' by your singleton custom type name
       |your code looks like this =>
-    pre.
-      \n  app.route('/').get(function(req, res) {
-            req.getApi.then(function(api) {
-              return api.getSingleton('your_custom_type_name');
-            }).then(function(myPage) {
-              res.render('index', {
-                myPage: myPage
-              });
-            }).catch(function(err) {
-              handleError(err, req, res);
-            });
-          });
+    .source-code
+      pre
+        code
+          |app.route('/').get(function(req, res) {
+          |  req.getApi.then(function(api) {
+          |    return api.getSingleton('your_custom_type_name');
+          |  }).then(function(myPage) {
+          |    res.render('index', {
+          |      myPage: myPage
+          |    });
+          |  }).catch(function(err) {
+          |    handleError(err, req, res);
+          |  });
+          |});
     h2 Create your first template
     p
       |create a file `index.pug` in the "views" folder
       |copy that code to import the layout and have a basic structure for this new page
       |=> Your template looks like this
 
-    pre.
-      \n  extends ./layout.pug
-          block body
-            div.content
-              h1 Welcome aboard!
+      .source-code
+        pre
+          code
+            |extends ./layout.pug
+            |block body
+            |  div.content
+            |    h1 Welcome aboard!
 
-    h3 map your content
-    p.
-      |Now you have to map your content from the document your retrieved in your controller.
-      |Don't forget, we sent the document content with the parameter named "myPage".
-      |If you change it in the index route, you'll have to change it in the template.
+      h3 map your content
+      p
+        |Now you have to map your content from the document your retrieved in your controller.
+        |Don't forget, we sent the document content with the parameter named "myPage".
+        |If you change it in the index route, you'll have to change it in the template.

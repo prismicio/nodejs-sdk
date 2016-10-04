@@ -1,5 +1,5 @@
 {
-  "name": "javascript-nodejs-starter",
+  "name": "nodejs-sdk",
   "version": "2.0.0",
   "private": true,
   "scripts": {
@@ -18,6 +18,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/prismicio/javascript-nodejs-starter.git"
+    "url": "http://github.com/prismicio/nodejs-sdk.git"
   }
 }

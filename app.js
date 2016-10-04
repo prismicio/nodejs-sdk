@@ -17,23 +17,22 @@ function handleError(err, req, res) {
 }
 
 app.listen(PORT, function() {
-  console.log('Type the follow command in your browser to run your project : http://localhost:' + PORT);
+  console.log('Type the following URL in your browser to run your project : http://localhost:' + PORT);
 });
 
 /**
 * initialize prismic context and api
 */
-app.route('*').get(function(req, res, next) {
+function api(req, res) {
   res.locals.ctx = { // So we can use this information in the views
     endpoint: PConfig.apiEndpoint,
     linkResolver: PConfig.linkResolver
   };
-  req.getApi = Prismic.api(PConfig.apiEndpoint, {
-    accessToken: PConfig.accessToken || null,
+  return Prismic.api(PConfig.apiEndpoint, {
+    accessToken: PConfig.accessToken,
     req: req
   });
-  next();
-});
+}
 
 /**
 * fallback route with documentation to build your project with prismic
@@ -46,7 +45,7 @@ app.get('/help', function(req, res) {
 * preconfigured prismic preview
 */
 app.get('/preview', function(req, res) {
-  req.getApi.then(function(api) {
+  api(req).then(function(api) {
     return Prismic.preview(api, configuration.linkResolver, req, res);
   }).catch(function(err) {
     handleError(err, req, res);

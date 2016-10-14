@@ -39,6 +39,13 @@ function api(req, res) {
 /**
 * route with documentation to build your project with prismic
 */
+app.get('/', function(req, res) {
+  res.redirect('/help');
+});
+
+/**
+* Prismic documentation to build your project with prismic
+*/
 app.get('/help', function(req, res) {
   res.render('help', {isConfigured : DEFAULT_ENDPOINT !== PConfig.apiEndpoint});
 });
@@ -52,11 +59,4 @@ app.get('/preview', function(req, res) {
   }).catch(function(err) {
     handleError(err, req, res);
   });
-});
-
-/**
-* catch all if any route matches and redirect to help
-*/
-app.get('*', function(req, res) {
-  res.redirect('/help')
 });

@@ -34,8 +34,10 @@ function api(req, res) {
   });
 }
 
+// INSERT YOUR ROUTES HERE
+
 /**
-* fallback route with documentation to build your project with prismic
+* route with documentation to build your project with prismic
 */
 app.get('/help', function(req, res) {
   res.render('help', {isConfigured : DEFAULT_ENDPOINT !== PConfig.apiEndpoint});

@@ -125,7 +125,7 @@
 }
 
 #prismic-help ul li span {
-    top: 14px;
+    top: 20px;
     padding: 0 10px;
 }
 
@@ -156,6 +156,32 @@
     position: relative;
     padding: 20px 0 20px 45px;
     border-bottom: 1px solid #E0EAF1;
+}
+
+#prismic-help ul li.done {
+    opacity: 0.4;
+}
+
+#prismic-help ul li.todo:after {
+    border-style: solid;
+    border-width: 0.18em 0.18em 0 0;
+    content: '';
+    display: inline-block;
+    height: 0.45em;
+    transform: rotate(126deg) skewY(15deg);
+    vertical-align: top;
+    width: 0.45em;
+    position: absolute;
+    right: 10px;
+    top: 28px;
+    color: #91ADC1;
+}
+
+#prismic-help ul li.done:after {
+    content: 'Done!';
+    position: absolute;
+    right: 0;
+    font-weight: initial;
 }
 
 #prismic-help ul li:last-child {

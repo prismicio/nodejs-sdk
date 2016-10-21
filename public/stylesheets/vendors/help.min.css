@@ -9,7 +9,7 @@
     margin-bottom: 50px;
     line-height: 1.6em;
     margin: auto;
-    height: 700px;
+    height: 900px;
     position: relative;
 }
 #prismic-help header .hero-curve {
@@ -23,21 +23,66 @@
     left: 0;
     z-index: 1;
     width: 100%;
-    height: 100px;
+    height: 300px;
     background-color: #fff;
 }
-#prismic-help header p {
+#prismic-help header nav {
+    display: flex;
+    justify-content: space-between;
+    max-width: 960px;
+    margin: auto;
+}
+
+#prismic-help header nav a {
+    color: white;
+    text-decoration: none;
+}
+
+#prismic-help header nav a strong {
+    font-weight: bold;
+}
+
+#prismic-help header nav a:hover {
+    text-decoration: underline;
+}
+
+#prismic-help header .wrapper {
+    max-width: 500px;
+    margin: 150px auto 0;
+}
+
+#prismic-help header h1 {
+    font-weight: bold;
+    font-size: 26px;
+    letter-spacing: 0.3;
+}
+
+#prismic-help header .wrapper p {
     font-size: 18px;
     font-weight: 400;
     text-align: center;
-    line-height: 20px;
+    line-height: 30px;
     letter-spacing: 0.3;
+}
+
+#prismic-help header .guide {
+    width: 960px;
+    max-width: 90%;
+    box-sizing: border-box;
+    padding: 60px 80px;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    box-shadow: 0px 10px 17px 0px rgba(44,49,126,0.20);
+    z-index: 1;
 }
 
 #prismic-help section {
     max-width: 800px;
     margin: auto;
-    padding: 50px;
+    padding: 100px 50px 50px;
 }
 
 #prismic-help h1 {
@@ -67,7 +112,7 @@
     padding: 0 0 0 45px;
 }
 
-#prismic-help h3 span{
+#prismic-help h3 span, #prismic-help ul li span{
     position: absolute;
     background: #FFCE80;
     border-radius: 100%;
@@ -77,6 +122,11 @@
     color: #fff;
     left: 0;
     top: 3px;
+}
+
+#prismic-help ul li span {
+    top: 14px;
+    padding: 0 10px;
 }
 
 #prismic-help h4 {
@@ -99,19 +149,18 @@
 }
 
 #prismic-help ul li {
-    padding-left: 1em;
-    text-indent: -1em;
-    display: flex;
     align-items: center;
-    margin: 10px 0
+    color: #516677;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    padding: 20px 0 20px 45px;
+    border-bottom: 1px solid #E0EAF1;
 }
 
-#prismic-help ul li:before {
-    content: "•";
-    color: #5ACE83;
-    margin-right: 1em;
-    line-height: 0;
-    font-size: 1.5em
+#prismic-help ul li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .source-code {

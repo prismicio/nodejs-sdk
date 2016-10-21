@@ -4,9 +4,36 @@ block body
   div#prismic-help
 
     header
-      h1 High five yourself, You deserve it!
-      p Grab a well deserve cup of coffee, just a two steps and you will have a page with dynamic content
-      div.hero-curve
+      nav
+        if isConfigured
+          a(href=repoURL target="_blank")
+            strong Go to my repository
+        else
+          div.empty
+        a(href="https://prismic.io/docs") Documentation
+      .wrapper
+        img(src="" alt="")
+        h1 High five yourself, You deserve it!
+        p Grab a well deserve cup of coffee, just a two steps and you will have a page with dynamic content
+      .hero-curve
+      .guide
+        ul
+          li
+            span 1
+            |Bootstrap your project
+          li
+            span 2
+            |Create a custom type
+          li
+            span 3
+            |Create your first page!
+          li
+            span 4
+            |Query the API and fill the template
+          li
+            span 5
+            |Well done!
+
 
     section
       h2 Just two more step and we can let you go

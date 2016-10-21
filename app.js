@@ -47,7 +47,10 @@ app.get('/', function(req, res) {
 * Prismic documentation to build your project with prismic
 */
 app.get('/help', function(req, res) {
-  res.render('help', {isConfigured : DEFAULT_ENDPOINT !== PConfig.apiEndpoint});
+  res.render('help', {
+    isConfigured : DEFAULT_ENDPOINT != PConfig.apiEndpoint,
+    repoURL: PConfig.apiEndpoint.replace("/api", "")
+  });
 });
 
 /**

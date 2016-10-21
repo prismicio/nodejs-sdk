@@ -4,8 +4,8 @@
 }
 #prismic-help header {
     color: #fff;
-    background-image: linear-gradient(-180deg, #3949AB 0%, #673AB7 100%);
-    padding: 50px 50px 0 50px;
+    background-image: linear-gradient(-180deg, #4545AE 0%, #673AB7 100%);
+    padding: 35px 50px 0 50px;
     margin-bottom: 50px;
     line-height: 1.6em;
     margin: auto;
@@ -36,6 +36,7 @@
 #prismic-help header nav a {
     color: white;
     text-decoration: none;
+    font-size: 16px;
 }
 
 #prismic-help header nav a.doc {
@@ -57,7 +58,7 @@
 
 #prismic-help header .wrapper {
     max-width: 500px;
-    margin: 150px auto 0;
+    margin: 70px auto 0;
     text-align: center;
 }
 
@@ -79,12 +80,13 @@
     width: 960px;
     max-width: 90%;
     box-sizing: border-box;
+    border-radius: 4px;
     padding: 60px 80px;
     background-color: white;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 0;
+    bottom: 40px;
     box-shadow: 0px 10px 17px 0px rgba(44,49,126,0.20);
     z-index: 1;
 }
@@ -96,7 +98,7 @@
 }
 
 #prismic-help h1 {
-    margin: 20px 0;
+    margin: 10px 0;
     font-size: 28px;
     font-weight: 500;
     letter-spacing: 0.5;

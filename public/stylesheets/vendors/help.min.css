@@ -245,17 +245,17 @@
     padding-bottom: 0;
 }
 
-.source-code {
+#prismic-help .source-code {
     position: relative;
-    width: 100%
+    width: 100%;
+    margin: 40px 0;
 }
 
-.source-code code {
+#prismic-help .source-code code {
     box-sizing: border-box;
     width: 100%;
     padding: 20px;
     line-height: 1.8rem;
-    margin: 40px 0
 }
 
 .hljs {

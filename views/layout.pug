@@ -9,11 +9,10 @@ head
     meta(name="viewport", content="width=device-width, initial-scale=1")
 
     // Required for Previews and Experiments
-    script(src="//code.jquery.com/jquery-1.11.3.min.js")
+    script(src="https://code.jquery.com/jquery-1.12.4.min.js")
     script
       = ctx?"window.prismic = { endpoint: '" + ctx.endpoint + "' };":""
     script(src="//static.cdn.prismic.io/prismic.min.js")
-    script(src="/javascript/vendors/analytics.js")
     script(src="/javascript/vendors/highlight.min.js")
 
 body

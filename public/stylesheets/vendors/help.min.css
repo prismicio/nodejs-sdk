@@ -49,6 +49,7 @@
 #prismic-help header .wrapper {
     max-width: 500px;
     margin: 150px auto 0;
+    text-align: center;
 }
 
 #prismic-help header h1 {

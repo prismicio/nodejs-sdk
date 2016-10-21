@@ -21,8 +21,17 @@ block body
       .source-code
         pre
           code
+            |/* In app.js, replace the block starting with "app.route(/)" with: */
             |app.route('/').get(function(req, res) {
-            |  ...
+            |        api.(req, res).then(function(api) {
+            |                return api.getByUID('page','get-started');
+            |        }).then(function(prismicdoc){
+            |                res.render('index',{
+            |                        pagecontent: prismicdoc
+            |                });
+            |        }).catch(function(err){
+            |                handleError(err, req, res);
+            |        });
             |});
 
       h3
@@ -33,6 +42,10 @@ block body
       .source-code
         pre
           code
-            |app.route('/').get(function(req, res) {
-            |  ...
-            |});
+            |/* In views/index.pug */
+            |extends ./layout.pug
+            |block body
+            |        div.welcome
+            |                img(src=pagecontent.getImage('page.image').url, class="star")
+            |                !=pagecontent.getStructuredText('page.title').asHtml(ctx.linkResolver)
+            |                !=pagecontent.getStructuredText('page.description').asHtml(ctx.linkResolver)

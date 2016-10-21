@@ -1,3 +1,6 @@
+#prismic-help *{
+    outline: none;
+}
 #prismic-help {
     margin: auto;
     background-color: white;
@@ -90,7 +93,13 @@
     box-shadow: 0px 10px 17px 0px rgba(44,49,126,0.20);
     z-index: 1;
 }
-
+#prismic-help header .guide a{
+    color: #516677;
+    text-decoration: none;
+}
+#prismic-help header .guide a:hover{
+    text-decoration: underline;
+}
 #prismic-help section {
     max-width: 800px;
     margin: auto;

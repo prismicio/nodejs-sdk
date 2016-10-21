@@ -38,6 +38,15 @@
     text-decoration: none;
 }
 
+#prismic-help header nav a.doc {
+    color: #d8d8ff;
+    display: flex;
+}
+
+#prismic-help header nav a.doc img {
+    margin-left: 10px;
+}
+
 #prismic-help header nav a strong {
     font-weight: bold;
 }
@@ -159,23 +168,13 @@
     border-bottom: 1px solid #E0EAF1;
 }
 
-#prismic-help ul li.done {
-    opacity: 0.4;
+#prismic-help ul li img {
+    position: absolute;
+    right: 0;
 }
 
-#prismic-help ul li.todo:after {
-    border-style: solid;
-    border-width: 0.18em 0.18em 0 0;
-    content: '';
-    display: inline-block;
-    height: 0.45em;
-    transform: rotate(126deg) skewY(15deg);
-    vertical-align: top;
-    width: 0.45em;
-    position: absolute;
-    right: 10px;
-    top: 28px;
-    color: #91ADC1;
+#prismic-help ul li.done {
+    opacity: 0.4;
 }
 
 #prismic-help ul li.done:after {

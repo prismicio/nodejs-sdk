@@ -36,12 +36,10 @@ function api(req, res) {
 
 // INSERT YOUR ROUTES HERE
 
-/**
-* route with documentation to build your project with prismic
-*/
-app.get('/', function(req, res) {
-  res.redirect('/help');
+app.route('/').get(function(req, res){
+  res.render('index');
 });
+
 
 /**
 * Prismic documentation to build your project with prismic

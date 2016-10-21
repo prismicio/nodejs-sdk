@@ -1,30 +1,19 @@
 extends ./layout.pug
 
 block body
-  div.help
+  div#prismic-help
 
     header
-      h1 Welcome aboard!
-      p prismic.io is a productive, enjoyable WordPress alternative for developers, it allows you to deliver rich designs using modern templating languages.
+      h1 High five yourself, You deserve it!
+      p Grab a well deserve cup of coffee, just a two steps and you will have a page with dynamic content
 
     section
-      if !isConfigured
-        h2 Update your prismic configuration
-        p Edit the prismic-configuration.js file
-        p go to your_repository_name.prismic.io/settings/apps and create a new Application
-        p In this project, fill the corresponding fields in prismic-configuration.js
-        ul
-          li clientID
-          li client Secret
-          li Permanent Access Token (access to master)
-          li Api Endpoint (your_repo_name.prismic.io/api)
-        p You can restart your node application, it's up and running !
+      h2 Just two more step and we can let you go
+      h3 Create your route for a homepage or everypage that you want
+      p Query the API for your "get-started" page
+        |Now that you've created your "get-started" page, go back to your local code. Let's make a call the API and retrieve our page |content. For that, we will use the specified UID.
+        |Once we've retrieved the page, we render the template providing it with its content.
 
-      h2 Create your first Page
-      h3 Create your content
-      p Start your tutorial in-app and come back here to complete the step 4.
-      h3 Create your first route
-      p add a new Route in app.js
       .source-code
         pre
           code
@@ -32,42 +21,12 @@ block body
             |  ...
             |});
 
-      h3 Query your content
-      p
-        |If you wanna create your homepage, make sure you have a custom type singleton with a published instance of it
-        |We are gonna query the content based on the custom type.
-        |You'll have to replace 'your_custom_type_name' by your singleton custom type name
-        |your code looks like this =>
+      h3 Create your first Page
+      h4 Replace static content with corresponding page fields
+      p Now all that's left to be done is replace the static non-managed content in the template with content we fetched from the API.
       .source-code
         pre
           code
             |app.route('/').get(function(req, res) {
-            |  req.getApi.then(function(api) {
-            |    return api.getSingleton('your_custom_type_name');
-            |  }).then(function(myPage) {
-            |    res.render('index', {
-            |      myPage: myPage
-            |    });
-            |  }).catch(function(err) {
-            |    handleError(err, req, res);
-            |  });
+            |  ...
             |});
-      h2 Create your first template
-      p
-        |create a file `index.pug` in the "views" folder
-        |copy that code to import the layout and have a basic structure for this new page
-        |=> Your template looks like this
-
-        .source-code
-          pre
-            code
-              |extends ./layout.pug
-              |block body
-              |  div.content
-              |    h1 Welcome aboard!
-
-        h3 map your content
-        p
-          |Now you have to map your content from the document your retrieved in your controller.
-          |Don't forget, we sent the document content with the parameter named "myPage".
-          |If you change it in the index route, you'll have to change it in the template.

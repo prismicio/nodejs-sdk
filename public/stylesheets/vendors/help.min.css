@@ -1,31 +1,31 @@
-.help {
-    max-width: 1200px;
+#prismic-help {
     margin: auto;
     background-color: white;
 }
 
-.help header {
-  padding: 50px 50px 0 50px;
-  max-width: 800px;
-  line-height: 1.6em;
-  margin: auto;
+#prismic-help header {
+    background-image: linear-gradient(-180deg, #3949AB 0%, #673AB7 100%);
+    padding: 50px 50px 0 50px;
+    line-height: 1.6em;
+    margin: auto;
 }
 
-.help header p {
-  font-size: 34px;
-  font-weight: 300;
-  text-align: center;
-  line-height: 55px;
+#prismic-help header p {
+    color: #fff;
+    font-size: 34px;
+    font-weight: 300;
+    text-align: center;
+    line-height: 55px;
 }
 
-.help section {
-  max-width: 800px;
-  margin: auto;
-  padding: 50px;
+#prismic-help section {
+    max-width: 800px;
+    margin: auto;
+    padding: 50px;
 }
 
-.help h1 {
-    color: #54CF80;
+#prismic-help h1 {
+    color: #fff;
     font-weight: 900;
     margin: 20px 0;
     line-height: 1.4;
@@ -33,30 +33,30 @@
     text-align: center;
 }
 
-.help h2 {
+#prismic-help h2 {
     font-size: 38px;
     margin-bottom: 15px;
     color: #314151;
 }
 
-.help h3 {
+#prismic-help h3 {
     font-size: 31px;
     margin-bottom: 15px;
     color: #314151;
 }
 
-.help p {
+#prismic-help p {
     line-height: 28px;
     margin-bottom: 40px;
 }
 
-.help ul {
+#prismic-help ul {
     list-style: none;
     padding: 0;
     margin: 0
 }
 
-.help ul li {
+#prismic-help ul li {
     padding-left: 1em;
     text-indent: -1em;
     display: flex;
@@ -64,7 +64,7 @@
     margin: 10px 0
 }
 
-.help ul li:before {
+#prismic-help ul li:before {
     content: "•";
     color: #5ACE83;
     margin-right: 1em;

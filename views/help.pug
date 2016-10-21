@@ -30,14 +30,16 @@ block body
               li.done
                 span 3
                 |Create your first page!
-              li.todo
-                span 4
-                |Query the API and fill the template
-                img(src="images/arrow.svg" alt="")
-              li.todo
-                span 5
-                |Well done!
-                img(src="images/arrow.svg" alt="")
+              li
+                a(href="#query")
+                  span 4
+                  |Query the API and fill the template
+                  img(src="images/arrow.svg" alt="")
+              li
+                a(href="#done")
+                  span 5
+                  |Well done!
+                  img(src="images/arrow.svg" alt="")
           .gif
 
 
@@ -45,7 +47,7 @@ block body
     section
       h2 Just two more step and we can let you go
 
-      h3
+      h3#query
         span 1
         |Create your route for a homepage or everypage that you want
 
@@ -69,7 +71,7 @@ block body
             |        });
             |});
 
-      h3
+      h3#done
         span 2
         |Create your first Page
       h4 Replace static content with corresponding page fields

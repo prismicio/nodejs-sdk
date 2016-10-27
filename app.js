@@ -7,6 +7,8 @@ var PORT = app.get('port');
 var PConfig = require('./prismic-configuration');
 var request = require('request');
 
+var DEFAULT_ENDPOINT = 'https://your-repo-name.prismic.io/api';
+
 function handleError(err, req, res) {
   if (err.status == 404) {
     res.status(404).send("404 not found");

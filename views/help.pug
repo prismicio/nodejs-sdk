@@ -9,13 +9,14 @@ block body
           a(href=repoURL target="_blank")
             strong Go to my repository
         else
-          div.empty
+          a(href="#config")
+            strong Configure a repository
         a.doc(href="https://prismic.io/docs") Documentation
           img(src="images/open.svg" alt="")
       .wrapper
         img(src="images/rocket.svg" alt="")
-        h1 High five yourself, You deserve it!
-        p Grab a well deserve cup of coffee, just a two steps and you will have a page with dynamic content
+        h1 High five, you deserve it!
+        p Grab a well deserved cup of coffee, you're two steps away from creating a page with dynamic content.
       .hero-curve
       .flip-flap
         .flipper
@@ -26,23 +27,44 @@ block body
                 |Bootstrap your project
               li
                 a(href="#query")
-                  span 4
-                  |Query the API and fill the template
+                  span 2
+                  |Query the API
                   img(src="images/arrow.svg" alt="")
               li
                 a(href="#done")
-                  span 5
-                  |Well done!
+                  span 3
+                  |Fill the template
                   img(src="images/arrow.svg" alt="")
           .gif
 
 
 
     section
-      h2 Just two more step and we can let you go
+      p This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can any time access this by pointing your browser to {}/help.
+
+      - var stepNumberText = isConfigured ? 'Two' : 'Three'
+      h2 #{stepNumberText} more steps:
+
+      if !isConfigured
+        h3#config
+          span 1
+          |Bootstrap your project
+
+        p If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply #[a(href="#") create one] choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!
+
+        h4 Add the repository URL to you configuration
+
+        p Replace the repository url in your config file with your-repo-name.prismic.io
+
+        .source-code
+          pre
+            code
+              |// In prismic-configuration.js
+              |apiEndpoint: "http://your-repo-name.prismic.io/api",
+
 
       h3#query
-        span 1
+        span 2
         |Create your route for a homepage or everypage that you want
 
       p Query the API for your "get-started" page

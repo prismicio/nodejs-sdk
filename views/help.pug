@@ -1,6 +1,16 @@
-extends ./layout.pug
+doctype html(lang='en')
 
-block body
+head
+    title prismic.io help page
+    link(rel="stylesheet", href="/stylesheets/reset.css")
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href="/stylesheets/vendors/help.min.css")
+    link(href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900", rel="stylesheet", type="text/css")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    script(src="https://code.jquery.com/jquery-1.12.4.min.js")
+    script(src="/javascript/vendors/highlight.min.js")
+
+body
   div#prismic-help
 
     header
@@ -33,14 +43,14 @@ block body
               li
                 a(href="#done")
                   span 3
-                  |Fill the template
+                  |Fill a template
                   img(src="images/arrow.svg" alt="")
           .gif
 
 
 
     section
-      p This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can any time access this by pointing your browser to #{host}/help.
+      p This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to #{host}/help.
 
       - var stepNumberText = isConfigured ? 'Two' : 'Three'
       h2 #{stepNumberText} more steps:
@@ -50,9 +60,9 @@ block body
           span 1
           |Bootstrap your project
 
-        p If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply #[a(href="https://prismic.io/#create" target="_blank") create one] choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!
+        p If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply #[a(href="https://prismic.io/#create" target="_blank") create one] by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!
 
-        h4 Add the repository URL to you configuration
+        h4 Add the repository URL to your configuration
 
         p Replace the repository url in your config file with your-repo-name.prismic.io
 
@@ -65,40 +75,41 @@ block body
 
       h3#query
         span 2
-        |Create your route for a homepage or everypage that you want
+        |Create a route and retrieve content
 
-      p Query the API for your "get-started" page
-        |Now that you've created your "get-started" page, go back to your local code. Let's make a call the API and retrieve our page |content. For that, we will use the specified UID.
-        |Once we've retrieved the page, we render the template providing it with its content.
+      p To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.
+        br
+        |In the following example we set a "/:uid" URL to fetch content of custom type "page" by its UID. The route then calls the "page" template and passes it the retrieved content.
 
       .source-code
         pre
           code
-            |/* In app.js, replace the block starting with "app.route(/)" with: */
-            |app.route('/').get(function(req, res) {
-            |        api.(req, res).then(function(api) {
-            |                return api.getByUID('page','get-started');
-            |        }).then(function(prismicdoc){
-            |                res.render('index',{
-            |                        pagecontent: prismicdoc
+            // Using NodeJS
+            |app.route('/:uid').get(function(req, res) {
+            |        var uid = req.params.uid;
+            |        api(req, res).then(function(api) {
+            |                return api.getByUID('page', uid);
+            |        }).then(function(pageContent) {
+            |                // pageContent is a document, or null if no match
+            |                res.render('page', {
+            |                        pageContent: pageContent
             |                });
-            |        }).catch(function(err){
-            |                handleError(err, req, res);
             |        });
             |});
 
       h3#done
         span 2
-        |Create your first Page
-      h4 Replace static content with corresponding page fields
-      p Now all that's left to be done is replace the static non-managed content in the template with content we fetched from the API.
+        |Fill a template
+      p Now all that's left to be done is insert your content into the template.
+        br
+        |You can get the content using the pageContent object we defined above. Each content field is accessed using the custom type API-ID and the field key defined in the custom type (for example 'page.image').
       .source-code
         pre
           code
-            |/* In views/index.pug */
+            |/* In views/page.pug */
             |extends ./layout.pug
             |block body
             |        div.welcome
-            |                img(src=pagecontent.getImage('page.image').url, class="star")
-            |                !=pagecontent.getStructuredText('page.title').asHtml(ctx.linkResolver)
-            |                !=pagecontent.getStructuredText('page.description').asHtml(ctx.linkResolver)
+            |                img(src=pageContent.getImage('page.image').url, class="star")
+            |                !=pageContent.getStructuredText('page.title').asHtml(ctx.linkResolver)
+            |                !=pageContent.getStructuredText('page.description').asHtml(ctx.linkResolver)

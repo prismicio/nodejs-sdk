@@ -50,10 +50,13 @@ app.get('/', function(req, res) {
 * Prismic documentation to build your project with prismic
 */
 app.get('/help', function(req, res) {
-  res.render('help', {
-    isConfigured : DEFAULT_ENDPOINT != PConfig.apiEndpoint,
-    repoURL: PConfig.apiEndpoint.replace("/api", "")
-  });
+  const repoRegexp = new RegExp('^(https?:\/\/([a-zA-Z0-9]+)\..+)\/api$');
+  const match = PConfig.apiEndpoint.match(repoRegexp);
+  const repoURL = match[1];
+  const name = match[2];
+  const host = req.headers.host
+  const isConfigured = DEFAULT_ENDPOINT != PConfig.apiEndpoint
+  res.render('help', {isConfigured, repoURL, name, host});
 });
 
 /**

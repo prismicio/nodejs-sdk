@@ -7,7 +7,7 @@ block body
       nav
         if isConfigured
           a(href=repoURL target="_blank")
-            strong Go to my repository
+            strong Go to #{name}
         else
           a(href="#config")
             strong Configure a repository
@@ -40,7 +40,7 @@ block body
 
 
     section
-      p This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can any time access this by pointing your browser to {}/help.
+      p This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can any time access this by pointing your browser to #{host}/help.
 
       - var stepNumberText = isConfigured ? 'Two' : 'Three'
       h2 #{stepNumberText} more steps:
@@ -50,7 +50,7 @@ block body
           span 1
           |Bootstrap your project
 
-        p If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply #[a(href="#") create one] choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!
+        p If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply #[a(href="https://prismic.io/#create" target="_blank") create one] choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!
 
         h4 Add the repository URL to you configuration
 

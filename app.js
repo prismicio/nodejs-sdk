@@ -5,6 +5,7 @@ var Prismic = require('prismic-nodejs');
 var app = require('./config');
 var PORT = app.get('port');
 var PConfig = require('./prismic-configuration');
+var request = require('request');
 
 var DEFAULT_ENDPOINT = 'https://your-repo-name.prismic.io/api';
 
@@ -17,7 +18,9 @@ function handleError(err, req, res) {
 }
 
 app.listen(PORT, function() {
-  console.log('Type the following URL in your browser to run your project : http://localhost:' + PORT);
+  const repoEndpoint = PConfig.apiEndpoint.replace("/api", "");
+  request.post(repoEndpoint + '/app/settings/onboarding/run', {})
+  console.log('Point your browser to: http://localhost:' + PORT);
 });
 
 /**
@@ -45,10 +48,13 @@ app.route('/').get(function(req, res){
 * Prismic documentation to build your project with prismic
 */
 app.get('/help', function(req, res) {
-  res.render('help', {
-    isConfigured : DEFAULT_ENDPOINT != PConfig.apiEndpoint,
-    repoURL: PConfig.apiEndpoint.replace("/api", "")
-  });
+  const repoRegexp = new RegExp('^(https?:\/\/([a-zA-Z0-9]+)\..+)\/api$');
+  const match = PConfig.apiEndpoint.match(repoRegexp);
+  const repoURL = match[1];
+  const name = match[2];
+  const host = req.headers.host
+  const isConfigured = DEFAULT_ENDPOINT != PConfig.apiEndpoint
+  res.render('help', {isConfigured, repoURL, name, host});
 });
 
 /**

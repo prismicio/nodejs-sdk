@@ -3,45 +3,13 @@ html {
 }
 
 body {
-    background: url(/images/bg.jpg);
-    color: #FFF;
+    //-webkit-text-stroke-width: .05px;
+    //-webkit-text-stroke-color: white;
+    -webkit-font-smoothing: antialiased;
     font-family: Lato, sans-serif;
-    font-weight: 300;
-    font-size: 1em;
-}
-
-a {
-    color: #FDBD58;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-h1 {
-    font-weight: 700;
-    font-size: 3.4rem;
-    margin-bottom: 1.25rem;
-}
-
-.welcome {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: 35.625rem;
-    margin: auto;
-    font-size: 1.25rem;
-}
-
-.welcome .star {
-    width: 14.875rem;
-    margin-bottom: 2rem;
-}
-
-.welcome p, .welcome a {
-    letter-spacing: 0.8;
-    line-height: 2rem;
+    font-size: 18px;
+    line-height:35px;
+    font-weight: 400;
+    letter-spacing: 0.45;
+    color: #516677;
 }

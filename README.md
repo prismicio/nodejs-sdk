@@ -15,7 +15,7 @@ npm install
 node app
 ```
 
-Your Node.js starter project is now up and running! However, by default, it will list and display documents from our "[Les Bonnes Choses](http://lesbonneschoses.prismic.me)" example repository.
+Your Node.js starter project is now up and running! However, by default, it will display some documentation to help you getting started with your Node.js project.
 
 #### Configure the starter project
 
@@ -24,7 +24,7 @@ Edit the `prismic-configuration.js` file to get the application connected to the
 ```
 exports.Configuration = {
 
-  apiEndpoint: 'https://lesbonneschoses.prismic.io/api',
+  apiEndpoint: 'https://your-repo-name.prismic.io/api',
 
   // -- Access token if the Master is not open
   // accessToken: 'xxxxxx',
@@ -70,15 +70,16 @@ $ heroku open
 
 #### Get started with prismic.io
 
-You can find out [how to get started with prismic.io](https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started) on our [prismic.io developer's portal](https://developers.prismic.io/).
+You can find out [how to get started with prismic.io](https://prismic.io/quickstart#?lang=node) and [our full documentation](https://prismic.io/docs).
 
 #### Understand the JavaScript development kit
 
 You'll find more information about how to use the development kit included in this starter project, by reading [its README file](https://github.com/prismicio/javascript-kit/blob/master/README.md).
+In this particular starter, we use the [prismic-nodejs kit](https://github.com/prismicio/prismic-nodejs/blob/master/README.md) based on the javascript-kit and which implement the prismic preview for Node.js.
 
 ### Contribute to the starter project
 
-Contribution is open to all developer levels, read our "[Contribute to the official kits](https://developers.prismic.io/documentation/UszOeAEAANUlwFpp/contribute-to-the-official-kits)" documentation to learn more.
+Contribution is open to all developer levels, read our "[Contribute to the official kits](https://prismic.io/docs/legacy/documentation/contribute-to-official-kits)" documentation to learn more.
 
 ### Licence
 

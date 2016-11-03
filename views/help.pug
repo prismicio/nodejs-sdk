@@ -1,0 +1,115 @@
+doctype html(lang='en')
+
+head
+    title prismic.io help page
+    link(rel="stylesheet", href="/stylesheets/reset.css")
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href="/stylesheets/vendors/help.min.css")
+    link(href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900", rel="stylesheet", type="text/css")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    script(src="https://code.jquery.com/jquery-1.12.4.min.js")
+    script(src="/javascript/vendors/highlight.min.js")
+
+body
+  div#prismic-help
+
+    header
+      nav
+        if isConfigured
+          a(href=repoURL target="_blank")
+            strong Go to #{name}
+        else
+          a(href="#config")
+            strong Configure a repository
+        a.doc(href="https://prismic.io/docs") Documentation
+          img(src="images/open.svg" alt="")
+      .wrapper
+        img(src="images/rocket.svg" alt="")
+        h1 High five, you deserve it!
+        p Grab a well deserved cup of coffee, you're two steps away from creating a page with dynamic content.
+      .hero-curve
+      .flip-flap
+        .flipper
+          .guide
+            ul
+              li.done
+                span 1
+                |Bootstrap your project
+              li
+                a(href="#query")
+                  span 2
+                  |Query the API
+                  img(src="images/arrow.svg" alt="")
+              li
+                a(href="#done")
+                  span 3
+                  |Fill a template
+                  img(src="images/arrow.svg" alt="")
+          .gif
+
+
+
+    section
+      p This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to #{host}/help.
+
+      - var stepNumberText = isConfigured ? 'Two' : 'Three'
+      h2 #{stepNumberText} more steps:
+
+      if !isConfigured
+        h3#config
+          span 1
+          |Bootstrap your project
+
+        p If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply #[a(href="https://prismic.io/#create" target="_blank") create one] by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!
+
+        h4 Add the repository URL to your configuration
+
+        p Replace the repository url in your config file with your-repo-name.prismic.io
+
+        .source-code
+          pre
+            code
+              |// In prismic-configuration.js
+              |apiEndpoint: "http://your-repo-name.prismic.io/api",
+
+
+      h3#query
+        span 2
+        |Create a route and retrieve content
+
+      p To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.
+        br
+        |In the following example we set a "/:uid" URL to fetch content of custom type "page" by its UID. The route then calls the "page" template and passes it the retrieved content.
+
+      .source-code
+        pre
+          code
+            // Using NodeJS
+            |app.route('/:uid').get(function(req, res) {
+            |        var uid = req.params.uid;
+            |        api(req, res).then(function(api) {
+            |                return api.getByUID('page', uid);
+            |        }).then(function(pageContent) {
+            |                // pageContent is a document, or null if no match
+            |                res.render('page', {
+            |                        pageContent: pageContent
+            |                });
+            |        });
+            |});
+
+      h3#done
+        span 3
+        |Fill a template
+      p Now all that's left to be done is insert your content into the template.
+        br
+        |You can get the content using the pageContent object we defined above. Each content field is accessed using the custom type API-ID and the field key defined in the custom type (for example 'page.image').
+      .source-code
+        pre
+          code
+            |/* In views/page.pug */
+            |extends ./layout.pug
+            |block body
+            |        div.welcome
+            |                img(src=pageContent.getImage('page.image').url, class="star")
+            |                !=pageContent.getStructuredText('page.title').asHtml(ctx.linkResolver)
+            |                !=pageContent.getStructuredText('page.description').asHtml(ctx.linkResolver)

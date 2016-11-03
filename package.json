@@ -1,5 +1,5 @@
 {
-  "name": "javascript-nodejs-starter",
+  "name": "nodejs-sdk",
   "version": "2.0.0",
   "private": true,
   "scripts": {
@@ -14,10 +14,11 @@
     "morgan": "~1.0.0",
     "prismic-nodejs": "~1.0.0",
     "pug": "^2.0.0-alpha6",
+    "request": "^2.76.0",
     "serve-favicon": "~2.3.0"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/prismicio/javascript-nodejs-starter.git"
+    "url": "http://github.com/prismicio/nodejs-sdk.git"
   }
 }

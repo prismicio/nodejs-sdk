@@ -79,13 +79,13 @@ body
 
       p To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.
         br
-        |In the following example we set a "/:uid" URL to fetch content of custom type "page" by its UID. The route then calls the "page" template and passes it the retrieved content.
+        |In the following example we set a "/page/:uid" URL to fetch content of custom type "page" by its UID. The route then calls the "page" template and passes it the retrieved content.
 
       .source-code
         pre
           code
             // Using NodeJS
-            |app.route('/:uid').get(function(req, res) {
+            |app.route('/page/:uid').get(function(req, res) {
             |        var uid = req.params.uid;
             |        api(req, res).then(function(api) {
             |                return api.getByUID('page', uid);

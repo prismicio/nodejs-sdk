@@ -79,37 +79,52 @@ body
 
       p To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.
         br
-        |In the following example we set a "/page/:uid" URL to fetch content of custom type "page" by its UID. The route then calls the "page" template and passes it the retrieved content.
+        |In the following example we set a <code class="tag">/page/:uid</code> URL to fetch content of custom type <code class="tag">page</code> by its UID. The route then calls the <code class="tag">page</code> template and passes it the retrieved content.
 
       .source-code
         pre
           code
             // Using NodeJS
             |app.route('/page/:uid').get(function(req, res) {
+            |        //- We store the param uid in a variable
             |        var uid = req.params.uid;
             |        api(req, res).then(function(api) {
-            |                return api.getByUID('page', uid);
+            |               //- We are using the function to get a document by its uid
+            |                return api.getByUID('#{'<your-custom-type-id>'}', uid);
             |        }).then(function(pageContent) {
-            |                // pageContent is a document, or null if no match
+            |                //- pageContent is a document, or null if there is no match
             |                res.render('page', {
+            |                //- Where 'page' is the name of your pug template file (page.pug)
             |                        pageContent: pageContent
             |                });
             |        });
             |});
+      p
+        |To discover all the functions you can use to query your documents go to&nbsp;
+        a(href="https://prismic.io/docs/custom-types#query?lang=javascript" target="_blank") the prismic documentation
 
       h3#done
         span 3
         |Fill a template
       p Now all that's left to be done is insert your content into the template.
         br
-        |You can get the content using the pageContent object we defined above. Each content field is accessed using the custom type API-ID and the field key defined in the custom type (for example 'page.image').
+        |You can get the content using the <code class="tag">pageContent</code> object we defined above. Each content field is accessed using the custom type <code class="tag">API-ID</code> and the field key defined in the custom type (for example <code class="tag">page.image</code>).
       .source-code
         pre
           code
-            |/* In views/page.pug */
+            |//- In views/page.pug
             |extends ./layout.pug
+            | //- Create a block
             |block body
             |        div.welcome
-            |                img(src=pageContent.getImage('page.image').url, class="star")
-            |                !=pageContent.getStructuredText('page.title').asHtml(ctx.linkResolver)
-            |                !=pageContent.getStructuredText('page.description').asHtml(ctx.linkResolver)
+            |                //- This is how to get an image into your template
+            |                img(src=pageContent.getImage('#{'<Your-custom-type-id>.<Your-field-image-id>'}').url)
+            |                //- This is how to get a structured text into your template
+            |                !=pageContent.getStructuredText('#{'<your-custom-type-id>.<your-field-text-id>'}').asHtml(ctx.linkResolver)
+            |                !=pageContent.getStructuredText('#{'<your-custom-type-id>.<your-field-text-id>'}').asHtml(ctx.linkResolver)
+
+            br
+        br
+        p
+          |To discover how to get all the field go to&nbsp;
+          a(href="https://prismic.io/docs/fields/structuredtext#?lang=javascript" target="_blank") the prismic documentation

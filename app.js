@@ -61,8 +61,8 @@ app.get('/help', function(req, res) {
 * preconfigured prismic preview
 */
 app.get('/preview', function(req, res) {
-  api(req).then(function(api) {
-    return Prismic.preview(api, configuration.linkResolver, req, res);
+  api(req, res).then(function(api) {
+    return Prismic.preview(api, PConfig.linkResolver, req, res);
   }).catch(function(err) {
     handleError(err, req, res);
   });

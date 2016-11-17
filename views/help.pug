@@ -38,7 +38,7 @@ body
               li
                 a(href="#query")
                   span 2
-                  |Query the API
+                  |Create a route and retrieve content
                   img(src="images/arrow.svg" alt="")
               li
                 a(href="#done")
@@ -77,24 +77,27 @@ body
         span 2
         |Create a route and retrieve content
 
-      p To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.
+      p
+        h4 You need to publish your content first !
+        |To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.
         br
-        |In the following example we set a <code class="tag">/page/:uid</code> URL to fetch content of custom type <code class="tag">page</code> by its UID. The route then calls the <code class="tag">page</code> template and passes it the retrieved content.
+        |In the following example we set a <code class="tag">/page/:uid</code> URL to fetch content of your custom type by its UID. The route then calls the <code class="tag">page</code> template and passes it the retrieved content.
 
       .source-code
         pre
           code
             // Using NodeJS
-            |app.route('/page/:uid').get(function(req, res) {
-            |        //- We store the param uid in a variable
+            |// add a new route in ./app.js
+            |app.get('/page/:uid', function(req, res) {
+            |        // We store the param uid in a variable
             |        var uid = req.params.uid;
             |        api(req, res).then(function(api) {
-            |               //- We are using the function to get a document by its uid
+            |               // We are using the function to get a document by its uid
             |                return api.getByUID('#{'<your-custom-type-id>'}', uid);
             |        }).then(function(pageContent) {
-            |                //- pageContent is a document, or null if there is no match
+            |                // pageContent is a document, or null if there is no match
             |                res.render('page', {
-            |                //- Where 'page' is the name of your pug template file (page.pug)
+            |                // Where 'page' is the name of your pug template file (page.pug)
             |                        pageContent: pageContent
             |                });
             |        });
@@ -112,11 +115,11 @@ body
       .source-code
         pre
           code
-            |//- In views/page.pug
+            |//- Create template views/page.pug
             |extends ./layout.pug
             | //- Create a block
             |block body
-            |        div.welcome
+            |        div
             |                //- This is how to get an image into your template
             |                img(src=pageContent.getImage('#{'<Your-custom-type-id>.<Your-field-image-id>'}').url)
             |                //- This is how to get a structured text into your template

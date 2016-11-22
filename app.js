@@ -7,8 +7,6 @@ var PORT = app.get('port');
 var PConfig = require('./prismic-configuration');
 var request = require('request');
 
-var DEFAULT_ENDPOINT = 'https://your-repo-name.prismic.io/api';
-
 function handleError(err, req, res) {
   if (err.status == 404) {
     res.status(404).send("404 not found");
@@ -48,12 +46,12 @@ app.route('/').get(function(req, res){
 * Prismic documentation to build your project with prismic
 */
 app.get('/help', function(req, res) {
-  const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.prismic\\.io)\/api$');
+  const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.[a-z]+\\.(io|dev))\/api$');
   const match = PConfig.apiEndpoint.match(repoRegexp);
   const repoURL = match[1];
   const name = match[2];
   const host = req.headers.host;
-  const isConfigured = DEFAULT_ENDPOINT != PConfig.apiEndpoint;
+  const isConfigured = name !== 'your-repo-name';
   res.render('help', {isConfigured, repoURL, name, host});
 });
 

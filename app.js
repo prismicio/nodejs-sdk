@@ -7,14 +7,6 @@ var PORT = app.get('port');
 var PConfig = require('./prismic-configuration');
 var request = require('request');
 
-function handleError(err, req, res) {
-  if (err.status == 404) {
-    res.status(404).send('404 not found');
-  } else {
-    res.status(500).send('Error 500: ' + err.message);
-  }
-}
-
 app.listen(PORT, function() {
   const repoEndpoint = PConfig.apiEndpoint.replace('/api', '');
   request.post(repoEndpoint + '/app/settings/onboarding/run', {});
@@ -22,18 +14,23 @@ app.listen(PORT, function() {
 });
 
 /**
-* initialize prismic context and api
+* initialize prismic context and api in a middleware
 */
-function api(req, res) {
-  res.locals.ctx = { // So we can use this information in the views
-    endpoint: PConfig.apiEndpoint,
-    linkResolver: PConfig.linkResolver
-  };
-  return Prismic.api(PConfig.apiEndpoint, {
-    accessToken: PConfig.accessToken,
-    req: req
-  });
-}
+app.use((req, res, next) => {
+  Prismic.api(PConfig.apiEndpoint,{accessToken: PConfig.accessToken, req: req})
+    .then((api) => {
+      req.prismic = {api: api};
+      res.locals.ctx = {
+        endpoint: PConfig.apiEndpoint,
+        snipcartKey: PConfig.snipcartKey,
+        linkResolver: PConfig.linkResolver
+      };
+      next();
+    }).catch(function(err) {
+      console.error('missing Prismic API Configuration')
+      next();
+    });
+});
 
 // INSERT YOUR ROUTES HERE
 
@@ -61,9 +58,5 @@ app.get('/help', function(req, res) {
 * preconfigured prismic preview
 */
 app.get('/preview', function(req, res) {
-  api(req, res).then(function(api) {
-    return Prismic.preview(api, PConfig.linkResolver, req, res);
-  }).catch(function(err) {
-    handleError(err, req, res);
-  });
+  return Prismic.preview(req.prismic.api, PConfig.linkResolver, req, res);
 });

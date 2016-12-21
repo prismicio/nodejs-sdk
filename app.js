@@ -17,7 +17,7 @@ function handleError(err, req, res) {
 
 app.listen(PORT, function() {
   const repoEndpoint = PConfig.apiEndpoint.replace('/api', '');
-  request.post(repoEndpoint + '/app/settings/onboarding/run', {});
+  request.post(repoEndpoint + '/app/settings/onboarding/run', {form: {language: 'node', framework: 'express'}});
   console.log('Point your browser to: http://localhost:' + PORT);
 });
 

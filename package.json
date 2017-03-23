@@ -35,6 +35,7 @@
   },
   "scripts": {
     "lint": "eslint *.js",
-    "test": "node -c *.js"
+    "test": "node -c *.js",
+    "start": "node app.js"
   }
 }

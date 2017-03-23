@@ -2,16 +2,16 @@
 /**
  * Module dependencies.
  */
-var express = require('express'),
-  favicon = require('serve-favicon'),
-  logger = require('morgan'),
-  bodyParser = require('body-parser'),
-  methodOverride = require('method-override'),
-  errorHandler = require('errorhandler'),
-  path = require('path');
+const express = require('express');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+const errorHandler = require('errorhandler');
+const path = require('path');
 
-module.exports = function() {
-  var app = express();
+module.exports = (() => {
+  const app = express();
 
   // all environments
   app.set('port', process.env.PORT || 3000);
@@ -27,4 +27,4 @@ module.exports = function() {
   app.use(errorHandler());
 
   return app;
-}();
+})();

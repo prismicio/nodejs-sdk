@@ -1,9 +1,7 @@
-/**
- * Module dependencies.
- */
 const Prismic = require('prismic-nodejs');
 const request = require('request');
 const PrismicConfig = require('./prismic-configuration');
+const Onboarding = require('./onboarding');
 const app = require('./config');
 
 const PORT = app.get('port');
@@ -17,14 +15,13 @@ function handleError(err, req, res) {
 }
 
 app.listen(PORT, () => {
-  const endpoint = PrismicConfig.apiEndpoint.replace('/api', '');
-  request.post(`${endpoint}/app/settings/onboarding/run`, { form: { language: 'node', framework: 'express' } });
+  Onboarding.trigger();
   process.stdout.write(`Point your browser to: http://localhost: ${PORT}\n`);
 });
 
-/**
-* initialize prismic context and api
-*/
+/*
+ * Initialize prismic context and api
+ */
 function fetchApi(req, res) {
   // So we can use this information in the views
   res.locals.ctx = { // eslint-disable-line no-param-reassign
@@ -39,16 +36,16 @@ function fetchApi(req, res) {
 
 // INSERT YOUR ROUTES HERE
 
-/**
-* route with documentation to build your project with prismic
-*/
+/*
+ * Route with documentation to build your project with prismic
+ */
 app.get('/', (req, res) => {
   res.redirect('/help');
 });
 
-/**
-* Prismic documentation to build your project with prismic
-*/
+/*
+ * Prismic documentation to build your project with prismic
+ */
 app.get('/help', (req, res) => {
   const repoRegexp = new RegExp('^(https?://([\\-\\w]+)\\.[a-z]+\\.(io|dev))/api$');
   const match = PrismicConfig.apiEndpoint.match(repoRegexp);
@@ -59,9 +56,9 @@ app.get('/help', (req, res) => {
   res.render('help', { isConfigured, repoURL, name, host });
 });
 
-/**
-* preconfigured prismic preview
-*/
+/*
+ * Preconfigured prismic preview
+ */
 app.get('/preview', (req, res) => {
   fetchApi(req, res).then(api => (
     Prismic.preview(api, PrismicConfig.linkResolver, req, res)

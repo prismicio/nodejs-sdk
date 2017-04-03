@@ -6,42 +6,35 @@ const app = require('./config');
 
 const PORT = app.get('port');
 
-function handleError(err, req, res) {
-  if (err.status === 404) {
-    res.status(404).send('404 not found');
-  } else {
-    res.status(500).send(`Error 500: ${err.message}`);
-  }
-}
-
 app.listen(PORT, () => {
   Onboarding.trigger();
-  process.stdout.write(`Point your browser to: http://localhost: ${PORT}\n`);
+  process.stdout.write(`Point your browser to: http://localhost:${PORT}\n`);
 });
 
 /*
  * Initialize prismic context and api
  */
-function fetchApi(req, res) {
-  // So we can use this information in the views
-  res.locals.ctx = { // eslint-disable-line no-param-reassign
-    endpoint: PrismicConfig.apiEndpoint,
-    linkResolver: PrismicConfig.linkResolver,
-  };
-  return Prismic.api(PrismicConfig.apiEndpoint, {
-    accessToken: PrismicConfig.accessToken,
-    req,
+app.use((req, res, next) => {
+  Prismic.api(PrismicConfig.apiEndpoint, { accessToken: PrismicConfig.accessToken, req })
+  .then((api) => {
+    req.prismic = { api };
+    res.locals.ctx = {
+      endpoint: PrismicConfig.apiEndpoint,
+      linkResolver: PrismicConfig.linkResolver,
+    };
+    next();
+  }).catch((err) => {
+    const message = err.status === 404 ? 'There was a problem connecting to your API, please check your configuration file for errors.' : `Error 500: ${err.message}`;
+    res.status(err.status).send(message);
   });
-}
+});
 
 // INSERT YOUR ROUTES HERE
 app.get('/page/:uid', (req, res) => {
   // We store the param uid in a variable
   const uid = req.params.uid;
-  fetchApi(req, res).then(api => (
     // We are using the function to get a document by its uid
-    api.getByUID('page', uid)
-  )).then((pageContent) => {
+  req.prismic.api.getByUID('page', uid).then((pageContent) => {
     if (pageContent) {
       // pageContent is a document, or null if there is no match
       res.render('page', {
@@ -78,9 +71,5 @@ app.get('/help', (req, res) => {
  * Preconfigured prismic preview
  */
 app.get('/preview', (req, res) => {
-  fetchApi(req, res).then(api => (
-    Prismic.preview(api, PrismicConfig.linkResolver, req, res)
-  )).catch((err) => {
-    handleError(err, req, res);
-  });
+  Prismic.preview(req.prismic.api, PrismicConfig.linkResolver, req, res);
 });

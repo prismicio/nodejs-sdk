@@ -1,67 +1,75 @@
-/**
- * Module dependencies.
- */
-var Prismic = require('prismic-nodejs');
-var app = require('./config');
-var PORT = app.get('port');
-var PConfig = require('./prismic-configuration');
-var request = require('request');
+const Prismic = require('prismic-nodejs');
+const request = require('request');
+const PrismicConfig = require('./prismic-configuration');
+const Onboarding = require('./onboarding');
+const app = require('./config');
 
-function handleError(err, req, res) {
-  if (err.status == 404) {
-    res.status(404).send('404 not found');
-  } else {
-    res.status(500).send('Error 500: ' + err.message);
-  }
-}
+const PORT = app.get('port');
 
-app.listen(PORT, function() {
-  const repoEndpoint = PConfig.apiEndpoint.replace('/api', '');
-  request.post(repoEndpoint + '/app/settings/onboarding/run', {form: {language: 'node', framework: 'express'}});
-  console.log('Point your browser to: http://localhost:' + PORT);
+app.listen(PORT, () => {
+  Onboarding.trigger();
+  process.stdout.write(`Point your browser to: http://localhost:${PORT}\n`);
 });
 
-/**
-* initialize prismic context and api
-*/
-function api(req, res) {
-  res.locals.ctx = { // So we can use this information in the views
-    endpoint: PConfig.apiEndpoint,
-    linkResolver: PConfig.linkResolver
-  };
-  return Prismic.api(PConfig.apiEndpoint, {
-    accessToken: PConfig.accessToken,
-    req: req
+/*
+ * Initialize prismic context and api
+ */
+app.use((req, res, next) => {
+  Prismic.api(PrismicConfig.apiEndpoint, { accessToken: PrismicConfig.accessToken, req })
+  .then((api) => {
+    req.prismic = { api };
+    res.locals.ctx = {
+      endpoint: PrismicConfig.apiEndpoint,
+      linkResolver: PrismicConfig.linkResolver,
+    };
+    next();
+  }).catch((err) => {
+    const message = err.status === 404 ? 'There was a problem connecting to your API, please check your configuration file for errors.' : `Error 500: ${err.message}`;
+    res.status(err.status).send(message);
   });
-}
+});
 
 // INSERT YOUR ROUTES HERE
+app.get('/page/:uid', (req, res) => {
+  // We store the param uid in a variable
+  const uid = req.params.uid;
+    // We are using the function to get a document by its uid
+  req.prismic.api.getByUID('page', uid).then((pageContent) => {
+    if (pageContent) {
+      // pageContent is a document, or null if there is no match
+      res.render('page', {
+        // Where 'page' is the name of your pug template file (page.pug)
+        pageContent,
+      });
+    } else {
+      res.status(404).send('404 not found');
+    }
+  });
+});
 
-app.route('/').get(function(req, res){
+/*
+ * Route with documentation to build your project with prismic
+ */
+app.route('/').get((req, res) => {
   res.render('index');
 });
 
-
-/**
-* Prismic documentation to build your project with prismic
-*/
-app.get('/help', function(req, res) {
-  const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.[a-z]+\\.(io|dev))\/api$');
-  const match = PConfig.apiEndpoint.match(repoRegexp);
+/*
+ * Prismic documentation to build your project with prismic
+ */
+app.get('/help', (req, res) => {
+  const repoRegexp = new RegExp('^(https?://([\\-\\w]+)\\.[a-z]+\\.(io|dev))/api$');
+  const match = PrismicConfig.apiEndpoint.match(repoRegexp);
   const repoURL = match[1];
   const name = match[2];
   const host = req.headers.host;
   const isConfigured = name !== 'your-repo-name';
-  res.render('help', {isConfigured, repoURL, name, host});
+  res.render('help', { isConfigured, repoURL, name, host });
 });
 
-/**
-* preconfigured prismic preview
-*/
-app.get('/preview', function(req, res) {
-  api(req, res).then(function(api) {
-    return Prismic.preview(api, PConfig.linkResolver, req, res);
-  }).catch(function(err) {
-    handleError(err, req, res);
-  });
+/*
+ * Preconfigured prismic preview
+ */
+app.get('/preview', (req, res) => {
+  Prismic.preview(req.prismic.api, PrismicConfig.linkResolver, req, res);
 });

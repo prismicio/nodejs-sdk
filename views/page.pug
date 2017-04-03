@@ -1,0 +1,7 @@
+extends ./layout.pug
+
+block body
+ div
+   img(src=pageContent.getImage('page.image').url)
+   !=pageContent.getStructuredText('page.title').asHtml(ctx.linkResolver)
+   !=pageContent.getStructuredText('page.description').asHtml(ctx.linkResolver)

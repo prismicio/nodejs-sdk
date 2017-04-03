@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "lint": "eslint app.js config.js prismic-configuration.js",
-    "test": "npm run lint"
+    "dev": "nodemon app.js",
+    "lint": "eslint *.js",
+    "test": "node -c *.js"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
@@ -32,9 +33,5 @@
   "engines" : {
     "node" : ">=4.8.1",
     "npm" : ">=2.15.11"
-  },
-  "scripts": {
-    "lint": "eslint *.js",
-    "test": "node -c *.js"
   }
 }

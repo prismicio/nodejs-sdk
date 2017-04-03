@@ -91,10 +91,8 @@ body
             |app.get('/page/:uid', function(req, res) {
             |        // We store the param uid in a variable
             |        var uid = req.params.uid;
-            |        api(req, res).then(function(api) {
-            |               // We are using the function to get a document by its uid
-            |                return api.getByUID('#{'<your-custom-type-id>'}', uid);
-            |        }).then(function(pageContent) {
+            |        // We are using the function to get a document by its uid
+            |        req.prismic.api.getByUID('#{'<your-custom-type-id>'}', uid).then(function(pageContent) {
             |                // pageContent is a document, or null if there is no match
             |                res.render('page', {
             |                // Where 'page' is the name of your pug template file (page.pug)

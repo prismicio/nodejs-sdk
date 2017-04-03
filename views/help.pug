@@ -88,20 +88,23 @@ body
           code
             // Using NodeJS
             |// add a new route in ./app.js
-            |app.get('/page/:uid', function(req, res) {
+            |app.get('/page/:uid', (req, res) => {
             |        // We store the param uid in a variable
             |        var uid = req.params.uid;
-            |        api(req, res).then(function(api) {
-            |               // We are using the function to get a document by its uid
-            |                return api.getByUID('#{'<your-custom-type-id>'}', uid);
-            |        }).then(function(pageContent) {
-            |                // pageContent is a document, or null if there is no match
-            |                res.render('page', {
-            |                // Where 'page' is the name of your pug template file (page.pug)
-            |                        pageContent: pageContent
-            |                });
+            |        // We are using the function to get a document by its uid
+            |        req.prismic.api.getByUID('#{'<your-custom-type-id>'}', uid).then((pageContent) => {
+            |                if (pageContent) {
+            |                    // pageContent is a document, or null if there is no match
+            |                    res.render('page', {
+            |                    // Where 'page' is the name of your pug template file (page.pug)
+            |                            pageContent,
+            |                    });
+            |                } else {
+            |                    res.status(404).send('404 not found');
+            |                }
             |        });
             |});
+
       p
         |To discover all the functions you can use to query your documents go to&nbsp;
         a(href="https://prismic.io/docs/custom-types#query?lang=javascript" target="_blank") the prismic documentation

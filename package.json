@@ -1,6 +1,6 @@
 {
   "name": "nodejs-sdk",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "start": "node app.js",
@@ -30,8 +30,8 @@
     "eslint-config-airbnb-base": "~11.1.0",
     "eslint-plugin-import": "~2.2.0"
   },
-  "engines" : {
-    "node" : ">=4.8.1",
-    "npm" : ">=2.15.11"
+  "engines": {
+    "node": ">=4.8.1",
+    "npm": ">=2.15.11"
   }
 }

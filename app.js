@@ -6,33 +6,28 @@ const app = require('./config');
 
 const PORT = app.get('port');
 
-function handleError(err, req, res) {
-  if (err.status === 404) {
-    res.status(404).send('404 not found');
-  } else {
-    res.status(500).send(`Error 500: ${err.message}`);
-  }
-}
-
 app.listen(PORT, () => {
   Onboarding.trigger();
-  process.stdout.write(`Point your browser to: http://localhost: ${PORT}\n`);
+  process.stdout.write(`Point your browser to: http://localhost:${PORT}\n`);
 });
 
 /*
  * Initialize prismic context and api
  */
-function fetchApi(req, res) {
-  // So we can use this information in the views
-  res.locals.ctx = { // eslint-disable-line no-param-reassign
-    endpoint: PrismicConfig.apiEndpoint,
-    linkResolver: PrismicConfig.linkResolver,
-  };
-  return Prismic.api(PrismicConfig.apiEndpoint, {
-    accessToken: PrismicConfig.accessToken,
-    req,
+app.use((req, res, next) => {
+  Prismic.api(PrismicConfig.apiEndpoint, { accessToken: PrismicConfig.accessToken, req })
+  .then((api) => {
+    req.prismic = { api };
+    res.locals.ctx = {
+      endpoint: PrismicConfig.apiEndpoint,
+      linkResolver: PrismicConfig.linkResolver,
+    };
+    next();
+  }).catch((err) => {
+    const message = err.status === 404 ? 'There was a problem connecting to your API, please check your configuration file for errors.' : `Error 500: ${err.message}`;
+    res.status(err.status).send(message);
   });
-}
+});
 
 // INSERT YOUR ROUTES HERE
 
@@ -60,9 +55,5 @@ app.get('/help', (req, res) => {
  * Preconfigured prismic preview
  */
 app.get('/preview', (req, res) => {
-  fetchApi(req, res).then(api => (
-    Prismic.preview(api, PrismicConfig.linkResolver, req, res)
-  )).catch((err) => {
-    handleError(err, req, res);
-  });
+  Prismic.preview(req.prismic.api, PrismicConfig.linkResolver, req, res);
 });

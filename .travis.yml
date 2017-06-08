@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- '4'
+- '5'
+- '6'
+- '7'
+- '8'
+script: npm run lint
+deploy:
+  provider: heroku
+  api_key:
+    secure: SqMhbmzWRRAa99BM/853K0rtjgGYkR08xXGZqi2pQuLZt4CqnKWntMT5dNDBN/N+1LErX2dfqtze/AJXsFYUZ8vJa7yQeVz99Ycyu9sTTIjcQDiVp3SEcUDl+rS4+EcsoJ/kngxUs8L2wzZxd0p2/DoJdxQ0IWO9ggaTmJxEFxccabXNX/y+508j/sDt+mbSvT9y07WCjx7j3tlu06oEx5kx6EkQG8Zz9/qMunjL7tWiHVYoilWQxagB3QkTG2ykOPVGl9GCl9FePtsBOkIgmwXBMmexJuzJJS/P5/BTOdWgjWXOVbKNIiMIo8BLYXc6Pn74sZZnl/n7A9wnOTX3I0Zwcv6JrjJBz2icv51IYKy0ILyXstjRV2SEzhlzqtu8NgKcIpkg5xSmNNl06PW4DEwFJ6+mHheUM2S2V9/057Yk4ppi79q2DkOf9EjOlekHodr8eX8s78Rx86vz88hkneUJ9NCnZS0t1UMgzpbZCLJT5ncxQCccEaHwgF2rquUq2BOYepDib0FXf3hqt7oxxDPyxDgDk0Xw7BHdDD2xZY3hHQSY1o3XyDDroC5G9Qrx5h19xEicMWo82zlHHoau+kV48N1RHSGJMlR7xRpNAp176Wbfu1l+w6BoNWQi0YcEKnLS11/0u4OKwC2vB596kfPe0/lDDz5QSgMFTbRIEps=
+  app: prismicio-nodejs-sdk
+  on:
+    repo: prismicio/nodejs-sdk
+    branch: winner-es6

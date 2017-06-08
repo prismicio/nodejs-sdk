@@ -1,4 +1,5 @@
-const Prismic = require('prismic-nodejs');
+const Prismic = require('prismic-javascript');
+const PrismicDOM = require('prismic-dom');
 const request = require('request');
 const Cookies = require('cookies');
 const config = require('./prismic-configuration');
@@ -19,6 +20,8 @@ app.use((req, res, next) => {
     endpoint: config.apiEndpoint,
     linkResolver: config.linkResolver,
   };
+  // add PrismicDOM in locals to access them in templates.
+  res.locals.PrismicDOM = PrismicDOM;
   Prismic.api(config.apiEndpoint, {
     accessToken: config.accessToken,
     req,

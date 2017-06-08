@@ -1,0 +1,10 @@
+//- Create template views/page.pug
+extends ./layout.pug
+//- Create a block
+block body
+       div(data-wio-id=pageContent.id)
+               //- This is how to get an image into your template
+               img(src=pageContent.data.image.url)
+               //- This is how to get a structured text into your template
+               != PrismicDOM.RichText.asHtml(pageContent.data.title, ctx.linkResolver)
+               != PrismicDOM.RichText.asHtml(pageContent.data.description, ctx.linkResolver)

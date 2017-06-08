@@ -128,10 +128,10 @@ body
             |block body
             |        div(data-wio-id=pageContent.id)
             |                //- This is how to get an image into your template
-            |                img(src=pageContent.!{`<strong>your_field_image_id</strong>`}.url)
+            |                img(src=pageContent.data.!{`<strong>your_field_image_id</strong>`}.url)
             |                //- This is how to get a structured text into your template
-            |                != PrismicDOM.asHtml(pageContent.!{`<strong>your_field_text_id</strong>`}, ctx.linkResolver)
-            |                != PrismicDOM.asHtml(pageContent.!{`<strong>your_field_text_id</strong>`}, ctx.linkResolver)
+            |                != PrismicDOM.asHtml(pageContent.data.!{`<strong>your_field_text_id</strong>`}, ctx.linkResolver)
+            |                != PrismicDOM.asHtml(pageContent.data.!{`<strong>your_field_text_id</strong>`}, ctx.linkResolver)
 
             br
         br

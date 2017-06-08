@@ -1,0 +1,10 @@
+//- Create template views/page.pug
+extends ./layout.pug
+//- Create a block
+block body
+  divgit checko
+    //- This is how to get an image into your template
+    img(src=pageContent.getImage('page.image').url)
+    //- This is how to get a structured text into your template
+    !=pageContent.getStructuredText('page.title').asHtml(ctx.linkResolver)
+    !=pageContent.getStructuredText('page.description').asHtml(ctx.linkResolver)

@@ -35,6 +35,27 @@ app.use((req, res, next) => {
 });
 
 // INSERT YOUR ROUTES HERE
+app.get('/page/:uid', (req, res, next) => {
+  // We store the param uid in a variable
+  const uid = req.params.uid;
+  // We are using the function to get a document by its uid
+  req.prismic.api.getByUID('page', uid)
+    .then((pageContent) => {
+      if (pageContent) {
+        // pageContent is a document, or null if there is no match
+        res.render('page', {
+          // Where 'page' is the name of your pug template file (page.pug)
+          pageContent,
+        });
+      } else {
+        res.status(404).send('404 not found');
+      }
+    })
+    .catch((error) => {
+      next(`error when retriving page ${error.message}`);
+    });
+});
+
 /*
  * Route with documentation to build your project with prismic
  */

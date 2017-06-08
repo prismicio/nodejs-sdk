@@ -88,7 +88,7 @@ body
           code
             // Using NodeJS
             |// add a new route in ./app.js
-            |app.get('/page/:uid', (req, res,, next) => {
+            |app.get('/page/:uid', (req, res, next) => {
             |        // We store the param uid in a variable
             |        const uid = req.params.uid;
             |        // We are using the function to get a document by its uid
@@ -106,7 +106,7 @@ body
             |        })
             |        .catch((error) => {
             |                next(`error when retriving page ${error.message}`);
-            |        }
+            |        });
             |});
 
       p

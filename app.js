@@ -1,5 +1,6 @@
 const Prismic = require('prismic-nodejs');
 const request = require('request');
+const Cookies = require('cookies');
 const config = require('./prismic-configuration');
 const Onboarding = require('./onboarding');
 const app = require('./config');
@@ -11,24 +12,24 @@ app.listen(PORT, () => {
   process.stdout.write(`Point your browser to: http://localhost:${PORT}\n`);
 });
 
-//Middleware catch all request, query Prismic API and configure everything for it
+// Middleware catch all request, query Prismic API and configure everything for it
 app.use((req, res, next) => {
-  //init prismic context
+  // init prismic context
   res.locals.ctx = {
     endpoint: config.apiEndpoint,
-    linkResolver: config.linkResolver
+    linkResolver: config.linkResolver,
   };
   Prismic.api(config.apiEndpoint, {
     accessToken: config.accessToken,
-    req
+    req,
   })
   .then((api) => {
     req.prismic = { api };
-    //continue spreading request
+    // continue spreading request
     next();
   })
   .catch((error) => {
-    //next with params handle error natively in express
+    // next with params handle error natively in express
     next(error.message);
   });
 });
@@ -57,7 +58,7 @@ app.get('/help', (req, res) => {
 /*
  * Preconfigured prismic preview
  */
-//preview
+// preview
 app.get('/preview', (req, res) => {
   const token = req.query.token;
   if (token) {

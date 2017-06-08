@@ -126,7 +126,7 @@ body
             |extends ./layout.pug
             | //- Create a block
             |block body
-            |        div
+            |        div(data-wio-id=pageContent.id)
             |                //- This is how to get an image into your template
             |                img(src=pageContent.getImage('#{'<Your-custom-type-id>.<Your-field-image-id>'}').url)
             |                //- This is how to get a structured text into your template

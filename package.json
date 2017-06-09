@@ -9,28 +9,28 @@
     "test": "node -c *.js"
   },
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "cookies": "^0.7.0",
-    "debug": "^2.6.8",
-    "errorhandler": "^1.5.0",
-    "express": "^4.15.3",
-    "method-override": "^2.3.9",
-    "morgan": "^1.8.2",
-    "prismic-dom": "^1.2.5",
-    "prismic-javascript": "^1.1.2",
-    "pug": "^2.0.0-rc.2",
-    "request": "^2.81.0",
-    "serve-favicon": "^2.4.3"
+    "body-parser": "~1.17.2",
+    "cookies": "~0.7.0",
+    "debug": "~2.6.8",
+    "errorhandler": "~1.5.0",
+    "express": "~4.15.3",
+    "method-override": "~2.3.9",
+    "morgan": "~1.8.2",
+    "prismic-dom": "~1.2.5",
+    "prismic-javascript": "~1.1.2",
+    "pug": "~2.0.0-rc.2",
+    "request": "~2.81.0",
+    "serve-favicon": "~2.4.3"
   },
   "repository": {
     "type": "git",
     "url": "http://github.com/prismicio/nodejs-sdk.git"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.3.0"
+    "babel-eslint": "~7.2.3",
+    "eslint": "~3.19.0",
+    "eslint-config-airbnb-base": "~11.2.0",
+    "eslint-plugin-import": "~2.3.0"
   },
   "engines": {
     "node": ">=4.8.1",

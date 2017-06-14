@@ -70,7 +70,7 @@ body
           pre
             code
               |// In prismic-configuration.js
-              |apiEndpoint: "http://your-repo-name.prismic.io/api",
+              |apiEndpoint: "http://your-repo-name.prismic.io/api/v2",
 
 
       h3#query
@@ -128,10 +128,10 @@ body
             |block body
             |        div(data-wio-id=pageContent.id)
             |                //- This is how to get an image into your template
-            |                img(src=pageContent.getImage('#{'<Your-custom-type-id>.<Your-field-image-id>'}').url)
+            |                img(src=pageContent.data.!{`<strong>your_field_image_id</strong>`}.url)
             |                //- This is how to get a structured text into your template
-            |                !=pageContent.getStructuredText('#{'<your-custom-type-id>.<your-field-text-id>'}').asHtml(ctx.linkResolver)
-            |                !=pageContent.getStructuredText('#{'<your-custom-type-id>.<your-field-text-id>'}').asHtml(ctx.linkResolver)
+            |                != PrismicDOM.asHtml(pageContent.data.!{`<strong>your_field_text_id</strong>`}, ctx.linkResolver)
+            |                != PrismicDOM.asHtml(pageContent.data.!{`<strong>your_field_text_id</strong>`}, ctx.linkResolver)
 
             br
         br

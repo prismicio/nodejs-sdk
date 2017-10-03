@@ -1,0 +1,6 @@
+//- Create template views/page.pug
+extends ./layout.pug
+//- Create a block
+block body
+       div(data-wio-id=pageContent.id)
+               != PrismicDOM.RichText.asHtml(pageContent.data.text, ctx.linkResolver)

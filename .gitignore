@@ -122,3 +122,4 @@ jspm_packages
 
 # Output of 'npm pack'
 *.tgz.log
+/package-lock.json

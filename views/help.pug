@@ -70,7 +70,7 @@ body
           pre
             code
               |// In prismic-configuration.js
-              |apiEndpoint: "http://your-repo-name.prismic.io/api",
+              |apiEndpoint: "http://your-repo-name.prismic.io/api/v2",
 
 
       h3#query
@@ -111,14 +111,14 @@ body
 
       p
         |To discover all the functions you can use to query your documents go to&nbsp;
-        a(href="https://prismic.io/docs/custom-types#query?lang=javascript" target="_blank") the prismic documentation
+        a(href="https://prismic.io/docs/nodejs/query-the-api/how-to-query-the-api" target="_blank") the prismic documentation
 
       h3#done
         span 3
         |Fill a template
       p Now all that's left to be done is insert your content into the template.
         br
-        |You can get the content using the <code class="tag">pageContent</code> object we defined above. Each content field is accessed using the custom type <code class="tag">API-ID</code> and the field key defined in the custom type (for example <code class="tag">page.image</code>).
+        |You can get the content using the <code class="tag">pageContent</code> object we defined above. Each content field is accessed using the content field's <code class="tag">API-ID</code> (for example <code class="tag">image</code> or <code class="tag">title</code>).
       .source-code
         pre
           code
@@ -128,13 +128,13 @@ body
             |block body
             |        div(data-wio-id=pageContent.id)
             |                //- This is how to get an image into your template
-            |                img(src=pageContent.getImage('#{'<Your-custom-type-id>.<Your-field-image-id>'}').url)
+            |                img(src=pageContent.data.!{`<strong>your_image_field_id</strong>`}.url)
             |                //- This is how to get a structured text into your template
-            |                !=pageContent.getStructuredText('#{'<your-custom-type-id>.<your-field-text-id>'}').asHtml(ctx.linkResolver)
-            |                !=pageContent.getStructuredText('#{'<your-custom-type-id>.<your-field-text-id>'}').asHtml(ctx.linkResolver)
+            |                != PrismicDOM.RichText.asHtml(pageContent.data.!{`<strong>your_title_field_id</strong>`}, ctx.linkResolver)
+            |                != PrismicDOM.RichText.asHtml(pageContent.data.!{`<strong>your_description_field_id</strong>`}, ctx.linkResolver)
 
             br
         br
         p
           |To discover how to get all the field go to&nbsp;
-          a(href="https://prismic.io/docs/fields/structuredtext#?lang=javascript" target="_blank") the prismic documentation
+          a(href="https://prismic.io/docs/nodejs/templating/the-response-object" target="_blank") the prismic documentation

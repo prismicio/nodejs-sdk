@@ -1,4 +1,5 @@
-const Prismic = require('prismic-nodejs');
+const Prismic = require('prismic-javascript');
+const PrismicDOM = require('prismic-dom');
 const request = require('request');
 const Cookies = require('cookies');
 const PrismicConfig = require('./prismic-configuration');
@@ -18,7 +19,8 @@ app.use((req, res, next) => {
     endpoint: PrismicConfig.apiEndpoint,
     linkResolver: PrismicConfig.linkResolver,
   };
-
+  // add PrismicDOM in locals to access them in templates.
+  res.locals.PrismicDOM = PrismicDOM;
   Prismic.api(PrismicConfig.apiEndpoint, {
     accessToken: PrismicConfig.accessToken,
     req,
@@ -47,19 +49,23 @@ app.route('/').get((req, res) => {
 app.get('/help', (req, res) => {
   const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev))\/api(\/v2)?$/;
   const [_, repoURL, name, extension, apiVersion] = PrismicConfig.apiEndpoint.match(repoRegexp);
-  const host = req.headers.host;
+  const { host } = req.headers;
   const isConfigured = name !== 'your-repo-name';
-  res.render('help', { isConfigured, repoURL, name, host });
+  res.render('help', {
+    isConfigured,
+    repoURL,
+    name,
+    host,
+  });
 });
 
 /*
  * Preconfigured prismic preview
  */
 app.get('/preview', (req, res) => {
-  const token = req.query.token;
+  const { token } = req.query;
   if (token) {
-    req.prismic.api.previewSession(token, PrismicConfig.linkResolver, '/')
-    .then((url) => {
+    req.prismic.api.previewSession(token, PrismicConfig.linkResolver, '/').then((url) => {
       const cookies = new Cookies(req, res);
       cookies.set(Prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
       res.redirect(302, url);

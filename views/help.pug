@@ -21,20 +21,28 @@ body
         else
           a(href="#config")
             strong Configure a repository
-        a.doc(href="https://prismic.io/docs") Documentation
+        a.doc(href="https://prismic.io/docs/nodejs/getting-started/prismic-from-scratch-with-nodejs") Documentation
           img(src="images/open.svg" alt="")
       .wrapper
         img(src="images/rocket.svg" alt="")
         h1 High five, you deserve it!
-        p Grab a well deserved cup of coffee, you're two steps away from creating a page with dynamic content.
+        - var stepCount = isConfigured ? 'two' : 'three'
+        p Grab a well deserved cup of coffee, you're !{stepCount} steps away from creating a page with dynamic content.
       .hero-curve
       .flip-flap
         .flipper
           .guide
             ul
-              li.done
-                span 1
-                |Bootstrap your project
+              if isConfigured
+                li.done
+                  span 1
+                  |Bootstrap your project
+              else
+                li
+                  a(href="#config")
+                    span 1
+                    |Bootstrap your project
+                    img(src="images/arrow.svg" alt="")
               li
                 a(href="#query")
                   span 2
@@ -68,7 +76,7 @@ body
 
         .source-code
           pre
-            code
+            code.js
               |// In prismic-configuration.js
               |apiEndpoint: "http://your-repo-name.prismic.io/api/v2",
 
@@ -78,28 +86,30 @@ body
         |Create a route and retrieve content
 
       p
-        h4 You need to publish your content first !
+        h4 You need to publish your content first!
         |To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.
-        br
+        span.note Note that you will need to include a UID field in your Custom Type in order for this to work.
         |In the following example we set a <code class="tag">/page/:uid</code> URL to fetch content of your custom type by its UID. The route then calls the <code class="tag">page</code> template and passes it the retrieved content.
 
       .source-code
         pre
-          code
-            // Using NodeJS
+          code.js
             |// add a new route in ./app.js
             |app.get('/page/:uid', (req, res, next) => {
+            |
             |        // We store the param uid in a variable
             |        const uid = req.params.uid;
-            |        // We are using the function to get a document by its uid
+            |
+            |        // We are using the function to get a document by its uid field
             |        req.prismic.api.getByUID('#{'<your-custom-type-id>'}', uid)
-            |        .then((pageContent) => {
-            |                if (pageContent) {
-            |                    // pageContent is a document, or null if there is no match
-            |                    res.render('page', {
-            |                            // Where 'page' is the name of your pug template file (page.pug)
-            |                            pageContent,
-            |                    });
+            |        .then((document) => {
+            |
+            |                // document is a document object, or null if there is no match
+            |                if (document) {
+            |
+            |                    // Render the 'page' pug template file (page.pug)
+            |                    res.render('page', { document }); 
+            |
             |                } else {
             |                    res.status(404).send('404 not found');
             |                }
@@ -111,30 +121,32 @@ body
 
       p
         |To discover all the functions you can use to query your documents go to&nbsp;
-        a(href="https://prismic.io/docs/custom-types#query?lang=javascript" target="_blank") the prismic documentation
+        a(href="https://prismic.io/docs/nodejs/query-the-api/how-to-query-the-api" target="_blank") the prismic documentation
 
       h3#done
         span 3
-        |Fill a template
-      p Now all that's left to be done is insert your content into the template.
+        |Fill your template
+      p Now all that's left to be done is to insert your content into the template.
         br
-        |You can get the content using the <code class="tag">pageContent</code> object we defined above. Each content field is accessed using the custom type <code class="tag">API-ID</code> and the field key defined in the custom type (for example <code class="tag">page.image</code>).
+        |You can get the content using the <code class="tag">document</code> object we defined above. All the content fields are accessed using their <code class="tag">API-IDs</code>. For example if you have an image field with the API-ID <code class="tag">main_image</code>, then you can access the image content with <code class="tag">document.data.!{`<strong>main_image</strong>`}</code>.
       .source-code
         pre
-          code
+          code.js
             |//- Create template views/page.pug
             |extends ./layout.pug
+            |
             | //- Create a block
             |block body
-            |        div(data-wio-id=pageContent.id)
+            |        div
+            |
             |                //- This is how to get an image into your template
-            |                img(src=pageContent.data.!{`<strong>your_field_image_id</strong>`}.url)
+            |                img(src=document.data.!{`<strong>your_iamge_field_id</strong>`}.url)
+            |
             |                //- This is how to get a structured text into your template
-            |                != PrismicDOM.RichText.asHtml(pageContent.data.!{`<strong>your_field_text_id</strong>`}, ctx.linkResolver)
-            |                != PrismicDOM.RichText.asHtml(pageContent.data.!{`<strong>your_field_text_id</strong>`}, ctx.linkResolver)
+            |                != PrismicDOM.RichText.asHtml(document.data.!{`<strong>your_text_field_id</strong>`}, ctx.linkResolver)
 
             br
         br
         p
           |To discover how to get all the field go to&nbsp;
-          a(href="https://prismic.io/docs/fields/structuredtext#?lang=javascript" target="_blank") the prismic documentation
+          a(href="https://prismic.io/docs/nodejs/templating/the-response-object" target="_blank") the prismic documentation

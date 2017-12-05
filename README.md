@@ -3,7 +3,7 @@
 [![Status](https://img.shields.io/travis/prismicio/nodejs-sdk/master.svg)](https://travis-ci.org/prismicio/nodejs-sdk)
 [![Dependency Status](https://david-dm.org/prismicio/nodejs-sdk.svg)](https://david-dm.org/prismicio/nodejs-sdk)
 
-This is a blank [NodeJS](http://nodejs.org/) (using [express](http://expressjs.com/)) project that will connect to any prismic.io repository, and trivially list its documents. It uses the prismic.io JavaScript development kit, and provides a few helpers to integrate with [express](http://expressjs.com/).
+This is a blank [NodeJS](http://nodejs.org/) (using [express](http://expressjs.com/)) project that will connect to any prismic.io repository. It uses the prismic.io JavaScript development kit, and provides a few helpers to integrate with [express](http://expressjs.com/).
 
 ### Getting started
 
@@ -18,7 +18,7 @@ npm install
 node app
 ```
 
-Your Node.js starter project is now up and running! However, by default, it will display some documentation to help you getting started with your Node.js project.
+Your Node.js starter project is now up and running! By default, it will display some documentation to help you getting started with your Node.js project.
 
 #### Configure the starter project
 
@@ -27,7 +27,7 @@ Edit the `prismic-configuration.js` file to get the application connected to the
 ```
 exports.Configuration = {
 
-  apiEndpoint: 'https://your-repo-name.prismic.io/api',
+  apiEndpoint: 'https://your-repo-name.prismic.io/api/v2',
 
   // -- Access token if the Master is not open
   // accessToken: 'xxxxxx',
@@ -73,16 +73,7 @@ $ heroku open
 
 #### Get started with prismic.io
 
-You can find out [how to get started with prismic.io](https://prismic.io/quickstart#?lang=node) and [our full documentation](https://prismic.io/docs).
-
-#### Understand the JavaScript development kit
-
-You'll find more information about how to use the development kit included in this starter project, by reading [its README file](https://github.com/prismicio/javascript-kit/blob/master/README.md).
-In this particular starter, we use the [prismic-nodejs kit](https://github.com/prismicio/prismic-nodejs/blob/master/README.md) based on the javascript-kit and which implement the prismic preview for Node.js.
-
-### Contribute to the starter project
-
-Contribution is open to all developer levels, read our "[Contribute to the official kits](https://prismic.io/docs/legacy/documentation/contribute-to-official-kits)" documentation to learn more.
+You can find out how to get started with prismic.io from our [full Node.js documentation](https://prismic.io/docs/nodejs/getting-started/prismic-from-scratch-with-nodejs).
 
 ### Licence
 

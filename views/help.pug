@@ -6,6 +6,7 @@ head
     link(rel="stylesheet", href="/stylesheets/style.css")
     link(rel="stylesheet", href="/stylesheets/vendors/help.min.css")
     link(href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900", rel="stylesheet", type="text/css")
+    link(href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600", rel="stylesheet", type="text/css")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     script(src="https://code.jquery.com/jquery-1.12.4.min.js")
     script(src="/javascript/vendors/highlight.min.js")
@@ -89,7 +90,7 @@ body
         h4 You need to publish your content first!
         |To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.
         span.note Note that you will need to include a UID field in your Custom Type in order for this to work.
-        |In the following example we set a <code class="tag">/page/:uid</code> URL to fetch content of your custom type by its UID. The route then calls the <code class="tag">page</code> template and passes it the retrieved content.
+        |In the following example we set a <code class="tag">/page/:uid</code> URL to fetch content of your custom type by its UID. The route then calls the <code class="tag">page</code> template and passes it the retrieved content. Make sure to replace <code class="tag">#{'<your-custom-type-id>'}</code> below with the API ID of your Custom Type.
 
       .source-code
         pre
@@ -97,26 +98,26 @@ body
             |// add a new route in ./app.js
             |app.get('/page/:uid', (req, res, next) => {
             |
-            |        // We store the param uid in a variable
-            |        const uid = req.params.uid;
+            |    // We store the param uid in a variable
+            |    const uid = req.params.uid;
             |
-            |        // We are using the function to get a document by its uid field
-            |        req.prismic.api.getByUID('#{'<your-custom-type-id>'}', uid)
-            |        .then((document) => {
+            |    // We are using the function to get a document by its uid field
+            |    req.prismic.api.getByUID('#{'<your-custom-type-id>'}', uid)
+            |    .then((document) => {
             |
-            |                // document is a document object, or null if there is no match
-            |                if (document) {
+            |        // document is a document object, or null if there is no match
+            |        if (document) {
             |
-            |                    // Render the 'page' pug template file (page.pug)
-            |                    res.render('page', { document }); 
+            |            // Render the 'page' pug template file (page.pug)
+            |            res.render('page', { document });
             |
-            |                } else {
-            |                    res.status(404).send('404 not found');
-            |                }
-            |        })
-            |        .catch((error) => {
-            |                next(`error when retriving page ${error.message}`);
-            |        });
+            |         } else {
+            |             res.status(404).send('404 not found');
+            |         }
+            |     })
+            |     .catch((error) => {
+            |         next(`error when retriving page ${error.message}`);
+            |     });
             |});
 
       p
@@ -137,13 +138,12 @@ body
             |
             | //- Create a block
             |block body
-            |        div
+            |    div
+            |        //- This is how to get an image into your template
+            |        img(src=document.data.!{`<strong>your_image_field_id</strong>`}.url)
             |
-            |                //- This is how to get an image into your template
-            |                img(src=document.data.!{`<strong>your_iamge_field_id</strong>`}.url)
-            |
-            |                //- This is how to get a structured text into your template
-            |                != PrismicDOM.RichText.asHtml(document.data.!{`<strong>your_text_field_id</strong>`}, ctx.linkResolver)
+            |        //- This is how to get a structured text into your template
+            |        != PrismicDOM.RichText.asHtml(document.data.!{`<strong>your_text_field_id</strong>`}, ctx.linkResolver)
 
             br
         br

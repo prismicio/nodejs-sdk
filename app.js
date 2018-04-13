@@ -44,22 +44,6 @@ app.route('/').get((req, res) => {
 });
 
 /*
- * Prismic documentation to build your project with prismic
- */
-app.get('/help', (req, res) => {
-  const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev))\/api(\/v2)?$/;
-  const [_, repoURL, name, extension, apiVersion] = PrismicConfig.apiEndpoint.match(repoRegexp);
-  const { host } = req.headers;
-  const isConfigured = name !== 'your-repo-name';
-  res.render('help', {
-    isConfigured,
-    repoURL,
-    name,
-    host,
-  });
-});
-
-/*
  * Preconfigured prismic preview
  */
 app.get('/preview', (req, res) => {

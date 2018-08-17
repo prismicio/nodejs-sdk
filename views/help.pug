@@ -110,14 +110,17 @@ body
         
       .source-code
         pre
-          code.js
+          code.json
             |{
-            |   "Main" : {
+            |   "Get Started" : {
             |     "uid" : {
             |       "type" : "UID",
             |       "config" : {
             |         "placeholder" : "UID"
             |       }
+            |     },
+            |     "image" : {
+            |       "type" : "Image"
             |     },
             |     "title" : {
             |       "type" : "StructuredText",
@@ -132,9 +135,6 @@ body
             |         "multi" : "paragraph,em,strong,hyperlink",
             |         "placeholder" : "Description..."
             |       }
-            |     },
-            |     "image" : {
-            |       "type" : "Image"
             |     }
             |   }
             |}
@@ -187,7 +187,7 @@ body
 
       p
         |To discover all the functions you can use to query your documents go to&nbsp;
-        a(href="https://prismic.io/docs/nodejs/query-the-api/how-to-query-the-api" target="_blank") the prismic documentation
+        a(href="https://prismic.io/docs/nodejs/query-the-api/how-to-query-the-api" target="_blank") the Prismic documentation
 
       h3#done
         span 5

@@ -1,7 +1,6 @@
 const Prismic = require('prismic-javascript');
 const PrismicDOM = require('prismic-dom');
 const request = require('request');
-const Cookies = require('cookies');
 const PrismicConfig = require('./prismic-configuration');
 const Onboarding = require('./onboarding');
 const app = require('./config');
@@ -66,8 +65,6 @@ app.get('/preview', (req, res) => {
   const { token } = req.query;
   if (token) {
     req.prismic.api.previewSession(token, PrismicConfig.linkResolver, '/').then((url) => {
-      const cookies = new Cookies(req, res);
-      cookies.set(Prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
       res.redirect(302, url);
     }).catch((err) => {
       res.status(500).send(`Error 500 in preview: ${err.message}`);

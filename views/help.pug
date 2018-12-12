@@ -178,7 +178,7 @@ body
             |       res.render('page', { document });
             |
             |     } else {
-            |       res.status(404).send('404 not found');
+            |       res.status(404).render('404');
             |     }
             |   }).catch((error) => {
             |     next(`error when retriving page ${error.message}`);

@@ -17,7 +17,7 @@
     "morgan": "~1.9.1",
     "prismic-dom": "~2.0.4",
     "prismic-javascript": "~1.4.0",
-    "pug": "~2.0.0-rc.2",
+    "pug": "~3.0.1",
     "request": "~2.83.0",
     "serve-favicon": "~2.4.3"
   },

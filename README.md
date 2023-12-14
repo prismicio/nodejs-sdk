@@ -1,3 +1,6 @@
+> ### ⚠️ Deprecated
+> Please see [prismicio-community/nextjs-starter-prismic-blog](https://github.com/prismicio-community/nextjs-starter-prismic-blog) instead.
+
 ## Starter for NodeJS projects
 
 [![Status](https://img.shields.io/travis/prismicio/nodejs-sdk/master.svg)](https://travis-ci.org/prismicio/nodejs-sdk)
